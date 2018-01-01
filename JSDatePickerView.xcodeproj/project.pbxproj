@@ -14,6 +14,9 @@
 		420377DD1FF286390012A55C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 420377DB1FF286390012A55C /* LaunchScreen.storyboard */; };
 		420377E81FF2863A0012A55C /* JSDatePickerViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420377E71FF2863A0012A55C /* JSDatePickerViewTests.swift */; };
 		420377F31FF2863A0012A55C /* JSDatePickerViewUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420377F21FF2863A0012A55C /* JSDatePickerViewUITests.swift */; };
+		420378011FF2864E0012A55C /* JSDatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420378001FF2864E0012A55C /* JSDatePickerView.swift */; };
+		4264771E1FF2EC5100F376A4 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4264771D1FF2EC5100F376A4 /* CalendarView.swift */; };
+		42973BAB1FF55D42009DEA7B /* CalenderUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42973BAA1FF55D42009DEA7B /* CalenderUtilities.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +50,9 @@
 		420377EE1FF2863A0012A55C /* JSDatePickerViewUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JSDatePickerViewUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		420377F21FF2863A0012A55C /* JSDatePickerViewUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSDatePickerViewUITests.swift; sourceTree = "<group>"; };
 		420377F41FF2863A0012A55C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		420378001FF2864E0012A55C /* JSDatePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSDatePickerView.swift; sourceTree = "<group>"; };
+		4264771D1FF2EC5100F376A4 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		42973BAA1FF55D42009DEA7B /* CalenderUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderUtilities.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +103,9 @@
 		420377D11FF286390012A55C /* JSDatePickerView */ = {
 			isa = PBXGroup;
 			children = (
+				4264771D1FF2EC5100F376A4 /* CalendarView.swift */,
+				42973BAA1FF55D42009DEA7B /* CalenderUtilities.swift */,
+				420378001FF2864E0012A55C /* JSDatePickerView.swift */,
 				420377D21FF286390012A55C /* AppDelegate.swift */,
 				420377D41FF286390012A55C /* ViewController.swift */,
 				420377D61FF286390012A55C /* Main.storyboard */,
@@ -259,8 +268,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				420378011FF2864E0012A55C /* JSDatePickerView.swift in Sources */,
 				420377D51FF286390012A55C /* ViewController.swift in Sources */,
+				4264771E1FF2EC5100F376A4 /* CalendarView.swift in Sources */,
 				420377D31FF286390012A55C /* AppDelegate.swift in Sources */,
+				42973BAB1FF55D42009DEA7B /* CalenderUtilities.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
