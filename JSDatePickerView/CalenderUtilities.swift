@@ -9,7 +9,7 @@
 import UIKit
 
 //This enum holds month/day data that is used in the calendar
-enum MonthEnum: Int, CustomStringConvertible
+public enum MonthEnum: Int, CustomStringConvertible
 {
     //months with raw values
     case January = 1, February, March, April, May, June, July, August, September, October, November, December
@@ -60,7 +60,7 @@ enum MonthEnum: Int, CustomStringConvertible
     }
     
     //CustomStringConvertible variable
-    var description: String
+    public var description: String
     {
         var desc = ""
         
@@ -95,11 +95,11 @@ enum MonthEnum: Int, CustomStringConvertible
     }
 }
 
-enum DayEnum: Int, CustomStringConvertible
+public enum DayEnum: Int, CustomStringConvertible
 {
     case Sunday = 1, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday
     
-    var description: String
+    public var description: String
     {
         var desc = ""
         
@@ -122,11 +122,19 @@ enum DayEnum: Int, CustomStringConvertible
         }
         return desc
     }
+    
+    public static func getSuffix(dayNumber:Int) -> String
+    {
+        if dayNumber % 10 == 1 && (dayNumber != 11){ return "st" }
+        else if dayNumber % 10 == 2 && (dayNumber != 12){ return "nd" }
+        else if dayNumber % 10 == 3 && (dayNumber != 13){ return "rd" }
+        else {return "th"}
+    }
 }
 
 //this struct holds the data for the collection view cells
 //the variable are nullable because there could either be date data or just day labels
-struct CalendarDay
+internal struct CalendarDay
 {
     public var day       : DayEnum?
     public var month     : MonthEnum?
@@ -136,7 +144,7 @@ struct CalendarDay
     public var grayed    : Bool
 }
 
-class CalendarUtil:NSObject
+internal class CalendarUtil:NSObject
 {
     public static func getCalendarData(for date: Date) -> [CalendarDay]
     {

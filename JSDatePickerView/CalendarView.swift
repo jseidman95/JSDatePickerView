@@ -9,21 +9,20 @@
 import UIKit
 
 //This class is the cell that holds the day data in the CollectionView
-class CalendarViewCell:UICollectionViewCell
+internal class CalendarViewCell:UICollectionViewCell
 {
-    //FILEPRIVATE VARS
-    fileprivate let dateNumberLabel        : UILabel      = UILabel()      //The label that holds the date number
-    fileprivate var circleDistanceFromEdge : CGFloat = 0.0                 //Customize the circle radius
-    fileprivate var todayCircleLayer       : CAShapeLayer = CAShapeLayer() //The circle that is shown on today's cell
-    fileprivate var selectedCircleLayer    : CAShapeLayer = CAShapeLayer() //The circle that is shown on selection
+    //INTERNAL VARS
+    internal let dateNumberLabel        : UILabel      = UILabel()      //The label that holds the date number
+    internal var circleDistanceFromEdge : CGFloat      = 0.0            //Customize the circle radius
+    internal var selectedCircleLayer    : CAShapeLayer = CAShapeLayer() //The circle that is shown on selection
 
-    fileprivate var selectedCircleColor    : UIColor = UIColor.red
+    internal var selectedCircleColor    : UIColor = UIColor.red
     {
-        didSet {self.setSelectedCircleColor(selectedCircleColor)}
+        didSet { self.setSelectedCircleColor(selectedCircleColor) }
     }
     
     //init from StoryBoard
-    required init?(coder aDecoder: NSCoder)
+    internal required init?(coder aDecoder: NSCoder)
     {
         super.init(coder: aDecoder)
         
@@ -31,7 +30,7 @@ class CalendarViewCell:UICollectionViewCell
     }
     
     //init from code
-    override init(frame: CGRect)
+    internal override init(frame: CGRect)
     {
         super.init(frame: frame)
         
@@ -46,7 +45,7 @@ class CalendarViewCell:UICollectionViewCell
         makeLabel()
         
         //make and store the circle layer
-        self.selectedCircleColor = UIColor.brown
+        self.selectedCircleColor = UIColor.gray
         self.circleDistanceFromEdge = 10.0
         
         //make the default border
@@ -58,10 +57,7 @@ class CalendarViewCell:UICollectionViewCell
     {
         self.selectedCircleLayer = makeCircle(color: color)
     }
-    private func setTodayCircleColor(_ color:UIColor)
-    {
-        self.todayCircleLayer = makeCircle(color: color)
-    }
+    
     //this function makes the date number label that is in the center of the cell
     private func makeLabel()
     {
@@ -72,25 +68,10 @@ class CalendarViewCell:UICollectionViewCell
         self.translatesAutoresizingMaskIntoConstraints                 = false
         self.dateNumberLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        //make constraints
-        let centerXConstraint = NSLayoutConstraint(item: dateNumberLabel,
-                                                   attribute: .centerX,
-                                                   relatedBy: .equal,
-                                                   toItem: self,
-                                                   attribute: .centerX,
-                                                   multiplier: 1.0,
-                                                   constant: 0.0)
-        let centerYConstraint = NSLayoutConstraint(item: dateNumberLabel,
-                                                   attribute: .centerY,
-                                                   relatedBy: .equal,
-                                                   toItem: self,
-                                                   attribute: .centerY,
-                                                   multiplier: 1.0,
-                                                   constant: 0.0)
         
-        //add constraints
-        self.addConstraint(centerXConstraint)
-        self.addConstraint(centerYConstraint)
+        //make anchors
+        dateNumberLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        dateNumberLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
     }
     
     //This function makes the circle that is shown when a cell is selected
@@ -119,16 +100,17 @@ class CalendarViewCell:UICollectionViewCell
         return shapeLayer
     }
     
-    //FILEPRIVATE FUNCTIONS
+    //INTERNAL FUNCTIONS
+    
     //This function adds the selection circle
-    fileprivate func addCircle(layer: CALayer)
+    internal func addCircle(layer: CALayer)
     {
         self.layer.insertSublayer(layer, below: dateNumberLabel.layer)
         self.dateNumberLabel.textColor = UIColor.white
     }
     
     //This function removes the selection circle
-    fileprivate func deleteCircle(layer: CALayer)
+    internal func deleteCircle(layer: CALayer)
     {
         layer.removeFromSuperlayer()
         self.dateNumberLabel.textColor = UIColor.black
@@ -136,34 +118,35 @@ class CalendarViewCell:UICollectionViewCell
 }
 
 //This class contains the CollectionView that makes up the calendar
-class CalendarView:UICollectionView,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout
+internal class CalendarView:UICollectionView,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout
 {
     //PRIVATE VARS
-    
-    private let daysPerLine:Int = 7
+    private let daysPerLine:Int = 7                   //This variable holds the amount of cells that are displayed per line
+    private var calendarData:[CalendarDay] = []       //This is the data source for the CollectionView
     private var selectedCell:CalendarViewCell? = nil
-    private var calendarData:[CalendarDay] = []
+    private var grayedCellColor:UIColor = UIColor(red: 231/255.0,
+                                                  green: 232/255.0,
+                                                  blue: 233/255.0,
+                                                  alpha: 1.0)
+    
+    //INTERNAL VARS
+    internal var parent:JSDatePickerView? = nil //The parent, used to change the text of the date picker label
+    internal var currentDate:Date = Date()      //The current date of the calendar
     
     //PUBLIC GET PRIVATE SET VARS
+    public private(set) var cellWidth:CGFloat = 0.0 //helps the picker view set frame, dont want the user messing with this
     
-    public private(set) var cellWidth:CGFloat = 0.0 //helps the picker view set frame
-    
-    //PUBLIC VARS
-    
-    public var cellBackgroundColor:UIColor = UIColor.white
-    public var grayedCellColor:UIColor = UIColor(red: 231/255.0,
-                                                 green: 232/255.0,
-                                                 blue: 233/255.0,
-                                                 alpha: 1.0)
-    public var todayCircleColor:UIColor    = UIColor.purple
-    public var selectedCircleColor:UIColor = UIColor.yellow
-    public var circleDistanceFromEdge:CGFloat = 0.0
-    public var parent:JSDatePickerView? = nil
-    public var font:UIFont = UIFont()
-    public var currentDate:Date = Date()
+    //CUSTOMIZABLE INTERNAL VARS
+    internal var cellBackgroundColor:UIColor = UIColor.white   //The background color of the cell
+    internal var selectedCircleColor:UIColor = UIColor(red: 255/255.0, //The color of circle when the user selects
+                                                     green: 51/255.0,
+                                                     blue: 51/255.0,
+                                                     alpha: 1.0)
+    internal var selectedCircleDistanceFromEdge:CGFloat = 0.0  //The circle's distance from the edge of the cell
+    internal var font:UIFont = UIFont()     //The font of the cells
     
     //init from code
-    override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout)
+    internal override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout)
     {
         super.init(frame: frame, collectionViewLayout: layout)
     
@@ -171,7 +154,7 @@ class CalendarView:UICollectionView,UICollectionViewDelegate,UICollectionViewDat
     }
     
     //init from StoryBoard
-    required init?(coder aDecoder: NSCoder)
+    internal required init?(coder aDecoder: NSCoder)
     {
         super.init(coder: aDecoder)
         
@@ -198,10 +181,10 @@ class CalendarView:UICollectionView,UICollectionViewDelegate,UICollectionViewDat
         self.backgroundColor = UIColor.white
         
         //set cell circle radius
-        self.circleDistanceFromEdge = 10.0
+        self.selectedCircleDistanceFromEdge = 10.0
         
         //get calendar data
-        self.calendarData = CalendarUtil.getCalendarData(for: currentDate)
+        reloadDate(newDate: currentDate)
         
         //make rounded corners
         self.layer.cornerRadius = 20.0
@@ -217,22 +200,24 @@ class CalendarView:UICollectionView,UICollectionViewDelegate,UICollectionViewDat
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "dateBoxCell", for: indexPath) as? CalendarViewCell
         
         //clear the data to avoid any dequeueing errors
-        cell?.deleteCircle(layer: cell!.todayCircleLayer)
         cell?.deleteCircle(layer: cell!.selectedCircleLayer)
         cell?.backgroundColor = cellBackgroundColor
         cell?.dateNumberLabel.font = font
         cell?.selectedCircleColor = selectedCircleColor
         
         //set the label
-        if calendarData[indexPath.row].day == nil
+        if calendarData[indexPath.row].day == nil //if the cell is a day cell and not a date cell
         {
             if let labelText = calendarData[indexPath.row].labelText
             {
+                //only get first three letter of the month
                 cell?.dateNumberLabel.text = String(labelText[...labelText.index(labelText.startIndex, offsetBy: 2)])
+                
+                //bold the month titles
                 cell?.dateNumberLabel.font = UIFont.boldSystemFont(ofSize: font.pointSize)
             }
         }
-        else
+        else //if the cell is a date cell
         {
             if let dayNumber = calendarData[indexPath.row].dayNumber
             {
@@ -242,22 +227,31 @@ class CalendarView:UICollectionView,UICollectionViewDelegate,UICollectionViewDat
         
         
         //get the components of today to check if the cell being displayed
-        let components = Calendar.current.dateComponents([.day,.month,.year], from: Date())
-        let componentsSelected = Calendar.current.dateComponents([.day,.month,.year], from: (self.parent?.currentDate)!)
-        
-        if components.day   == calendarData[indexPath.row].dayNumber       &&
-           components.month == calendarData[indexPath.row].month?.rawValue &&
-           components.year  == calendarData[indexPath.row].year
+        if let pickedDate = self.parent?.currentDate
         {
-            cell?.dateNumberLabel.font = UIFont.boldSystemFont(ofSize: font.pointSize + 3.0)
+            let components = Calendar.current.dateComponents([.day,.month,.year], from: Date())
+            let pickedComponents = Calendar.current.dateComponents([.day,.month,.year], from: pickedDate)
+            
+            //if the current cell is today's date, increase the font size
+            if components.day   == calendarData[indexPath.row].dayNumber       &&
+               components.month == calendarData[indexPath.row].month?.rawValue &&
+               components.year  == calendarData[indexPath.row].year
+            {
+                cell?.dateNumberLabel.font = UIFont.boldSystemFont(ofSize: font.pointSize + 7.0)
+            }
+            
+            //if the cell is the same date as from the DatePickerView, put the selected circle on it
+            if pickedComponents.day   == calendarData[indexPath.row].dayNumber       &&
+               pickedComponents.month == calendarData[indexPath.row].month?.rawValue &&
+               pickedComponents.year  == calendarData[indexPath.row].year
+            {
+                if let selectedCircleLayer = cell?.selectedCircleLayer
+                {
+                    cell?.addCircle(layer: selectedCircleLayer)
+                    selectedCell = cell
+                }
+            }
         }
-        else if componentsSelected.day   == calendarData[indexPath.row].dayNumber       &&
-                componentsSelected.month == calendarData[indexPath.row].month?.rawValue &&
-                componentsSelected.year  == calendarData[indexPath.row].year
-        {
-            cell?.addCircle(layer: (cell?.selectedCircleLayer)!)
-        }
-
         
         //if the calendar data is not from this month, it should be grayed out slightly
         if calendarData[indexPath.row].grayed
@@ -275,6 +269,7 @@ class CalendarView:UICollectionView,UICollectionViewDelegate,UICollectionViewDat
         return calendarData.count
     }
     
+    //The size of the items is calculated precisely to preserve the grid layout
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize
@@ -307,35 +302,47 @@ class CalendarView:UICollectionView,UICollectionViewDelegate,UICollectionViewDat
     //allow the user to select a day and change the date listed in the picker view
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
     {
-        let components = Calendar.current.dateComponents([.day,.month], from: currentDate)
-        
-        guard (components.day   == calendarData[indexPath.row].dayNumber &&
-               components.month == calendarData[indexPath.row].month?.rawValue) ||
-               calendarData[indexPath.row].labelText != nil
-        else
+        if let pickedDate = self.parent?.currentDate
         {
-            let cell = collectionView.cellForItem(at: indexPath) as? CalendarViewCell
+            //get the components from the date in the date picker view
+            let components = Calendar.current.dateComponents([.day,.month], from: pickedDate)
             
-            if let cell = cell
+            //make sure the date is not the date of the date picker view or a label cell
+            guard (components.day   == calendarData[indexPath.row].dayNumber &&
+                   components.month == calendarData[indexPath.row].month?.rawValue) ||
+                   calendarData[indexPath.row].labelText != nil
+            else
             {
-                if selectedCell == nil
+                //get the cell that was selected
+                let cell = collectionView.cellForItem(at: indexPath) as? CalendarViewCell
+                
+                if let cell = cell
                 {
+                    //first delete the current selection circle
+                    self.selectedCell?.deleteCircle(layer: self.selectedCell!.selectedCircleLayer)
+                    
+                    //add the new selection circle
                     cell.addCircle(layer: cell.selectedCircleLayer)
-                    selectedCell = cell
+                    
+                    //
+                    if let parent = self.parent
+                    {
+                        //make new date from selected cell data
+                        var dateComponents   = DateComponents()
+                        dateComponents.day   = calendarData[indexPath.row].dayNumber
+                        dateComponents.month = calendarData[indexPath.row].month?.rawValue
+                        dateComponents.year  = calendarData[indexPath.row].year
+                        
+                        if let date = Calendar.current.date(from: dateComponents)
+                        {
+                            //collapse the calendar
+                            parent.currentDate = date
+                            parent.collapseCalendar()
+                        }
+                    }
                 }
-                else if cell == selectedCell
-                {
-                    cell.deleteCircle(layer: cell.selectedCircleLayer)
-                    selectedCell = nil
-                }
-                else
-                {
-                    selectedCell?.deleteCircle(layer: selectedCell!.selectedCircleLayer)
-                    cell.addCircle(layer: cell.selectedCircleLayer)
-                    selectedCell = cell
-                }
+                return
             }
-            return
         }
     }
 
@@ -350,24 +357,22 @@ class CalendarView:UICollectionView,UICollectionViewDelegate,UICollectionViewDat
     
     //PUBLIC FUNCTIONS
     
-    public func reloadDate(newDate:Date)
+    internal func reloadDate(newDate:Date)
     {
         calendarData = CalendarUtil.getCalendarData(for: newDate)
         self.currentDate = newDate
         self.reloadData()
     }
     
-    public func reloadDateAnimated(newDate:Date)
+    internal func reloadDateAnimated(newDate:Date)
     {
         calendarData = CalendarUtil.getCalendarData(for: newDate)
         self.currentDate = newDate
+
         self.performBatchUpdates({
             let range = NSMakeRange(0, self.numberOfSections)
             let sections = NSIndexSet(indexesIn: range)
             self.reloadSections(sections as IndexSet)
-        }, completion: {
-            _ in
-            self.parent?.updateHeight()
-        })
+        }, completion: nil)
     }
 }

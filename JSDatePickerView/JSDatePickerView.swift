@@ -8,19 +8,35 @@
 
 import UIKit
 
-class JSDatePickerView: UIView
+public class JSDatePickerView: UIView
 {
     //PRIVATE VARS
-    
-    //Calendar Vars
     private var calendarView:CalendarView? = nil         //holds the reference to the CalendarView
     private var firstTimeCalendarExpanding :Bool = true  //used to see if the calendar needs to be added or presented
     private var calendarHeightConstraint   :NSLayoutConstraint = NSLayoutConstraint()
     private var calendarWidthConstraint    :NSLayoutConstraint = NSLayoutConstraint()
     
-    //Date vars
+    //PUBLIC VARS
+    public let leftButton  : UIButton  = UIButton(type: .custom)
+    public let rightButton : UIButton  = UIButton()
+    public let centerLabel : UILabel   = UILabel()
+    public var swipeLeft  = UISwipeGestureRecognizer()
+    public var swipeRight = UISwipeGestureRecognizer()
+    public private(set) var isCalendarExpanded:Bool = false //helps with the presentation of the calendar
+    public var calendarWidth:CGFloat = 300.0
     public var currentDate:Date = Date()
-    
+    public var cellBackgroundColor: UIColor = UIColor()
+    {
+        didSet { self.calendarView?.cellBackgroundColor = cellBackgroundColor }
+    }
+    public var selectedCellCircleColor: UIColor = UIColor()
+    {
+        didSet { self.calendarView?.selectedCircleColor = selectedCellCircleColor }
+    }
+    public var selectedCellDistanceFromEdge:CGFloat = 0.0
+    {
+        didSet { self.calendarView?.selectedCircleDistanceFromEdge = selectedCellDistanceFromEdge }
+    }
     public var calendarFont:UIFont = UIFont()
     {
         didSet
@@ -29,14 +45,8 @@ class JSDatePickerView: UIView
         }
     }
     
-    //PUBLIC VARS
-    public let leftButton  : UIButton  = UIButton(type: .custom)
-    public var isCalendarExpanded:Bool = false //helps witht the presentation of the calendar
-    public let rightButton : UIButton  = UIButton()
-    public let centerLabel : UILabel   = UILabel()
-    
     //init from code
-    override init(frame: CGRect)
+    public override init(frame: CGRect)
     {
         super.init(frame: frame)
 
@@ -44,7 +54,7 @@ class JSDatePickerView: UIView
     }
     
     //init from StoryBoard
-    required init?(coder aDecoder: NSCoder)
+    public required init?(coder aDecoder: NSCoder)
     {
         super.init(coder: aDecoder)
         
@@ -52,6 +62,7 @@ class JSDatePickerView: UIView
     }
     
     //PRIVATE FUNCTIONS
+    
     //This function handles the start up
     private func startUp()
     {
@@ -73,9 +84,22 @@ class JSDatePickerView: UIView
         //set the current date
         currentDate = Date()
         
-        //set label text
-        let components = Calendar.current.dateComponents(in: .current, from: currentDate)
-        self.centerLabel.text = "\(components.month!)/\(components.day!)/\(components.year!)"
+        //set date label text
+        setLabelFullDate(date: currentDate)
+        
+        //add gesture rec to view
+        self.isUserInteractionEnabled = true
+        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleDateTap)))
+        
+        //add left swipe
+        swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(rightButtonAction))
+        swipeLeft.direction = .left
+        self.addGestureRecognizer(swipeLeft)
+        
+        //add right swipe
+        swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(leftButtonAction))
+        swipeRight.direction = .right
+        self.addGestureRecognizer(swipeRight)
         
         //add to view
         self.addSubview(centerLabel)
@@ -100,45 +124,37 @@ class JSDatePickerView: UIView
     //the function that handles the back action
     @objc public func leftButtonAction()
     {
-        if self.isCalendarExpanded
-        {
-            let newDate = Calendar.current.date(byAdding: .month, value: -1, to: (calendarView?.currentDate)!)! 
-            calendarView?.reloadDateAnimated(newDate: newDate)
-
-            let components = Calendar.current.dateComponents(in: .current, from: newDate)
-            self.centerLabel.text = "\(MonthEnum(rawValue: components.month!)!.description) \(components.year!)"
-        }
-        else
-        {
-            let newDate = Calendar.current.date(byAdding: .day, value: -1, to: currentDate)!
-            currentDate = newDate
-            calendarView?.reloadDate(newDate: newDate)
-            
-            let components = Calendar.current.dateComponents(in: .current, from: newDate)
-            self.centerLabel.text = "\(components.month!)/\(components.day!)/\(components.year!)"
-        }
+        addValueToDate(value: -1, left: true)
     }
     
     //the function that handles the forward action
     @objc public func rightButtonAction()
     {
-        
+        addValueToDate(value: 1, left: false)
+    }
+    
+    private func addValueToDate(value:Int, left: Bool)
+    {
         if self.isCalendarExpanded
         {
-            let newDate = Calendar.current.date(byAdding: .month, value: 1, to: (calendarView?.currentDate)!)!
-            calendarView?.reloadDateAnimated(newDate: newDate)
-            
-            let components = Calendar.current.dateComponents(in: .current, from: newDate)
-            self.centerLabel.text = "\(MonthEnum(rawValue: components.month!)!.description) \(components.year!)"
+            //go back a month and reload the date with animation so the user can see
+            if let calDate = calendarView?.currentDate
+            {
+                if let newDate =  Calendar.current.date(byAdding: .month, value: value, to: calDate)
+                {
+                    calendarView?.reloadDateAnimated(newDate: newDate)
+                    move(left: left, month: true, date: newDate)
+                }
+            }
         }
-        else
+        else //set the current date and reload the calendar date without animation
         {
-            let newDate = Calendar.current.date(byAdding: .day, value: 1, to: currentDate)!
-            currentDate = newDate
-            calendarView?.reloadDate(newDate: newDate)
-            
-            let components = Calendar.current.dateComponents(in: .current, from: newDate)
-            self.centerLabel.text = "\(components.month!)/\(components.day!)/\(components.year!)"
+            if let newDate = Calendar.current.date(byAdding: .day, value: value, to: currentDate)
+            {
+                currentDate = newDate
+                calendarView?.reloadDate(newDate: newDate)
+                move(left: left, month: false, date: currentDate)
+            }
         }
     }
     
@@ -189,8 +205,7 @@ class JSDatePickerView: UIView
                                                           toItem: nil,
                                                           attribute: .notAnAttribute,
                                                           multiplier: 1.0,
-                                                          constant: self.frame.width >= 500.0 ? 500.0 :
-                                                                                                self.frame.width - 50.0)
+                                                          constant: calendarWidth)
             calendarHeightConstraint = NSLayoutConstraint(item: calendarView,
                                                           attribute: .height,
                                                           relatedBy: .equal,
@@ -253,14 +268,14 @@ class JSDatePickerView: UIView
                                                               toItem: nil,
                                                               attribute: .notAnAttribute,
                                                               multiplier: 1.0,
-                                                              constant: 20.0)
+                                                              constant: 25.0)
         let arrowRightHeightConstraint   = NSLayoutConstraint(item: rightButton,
                                                               attribute: .height,
                                                               relatedBy: .equal,
                                                               toItem: nil,
                                                               attribute: .notAnAttribute,
                                                               multiplier: 1.0,
-                                                              constant: 20.0)
+                                                              constant: 25.0)
         let arrowLeftAspectConstraint    = NSLayoutConstraint(item: leftButton,
                                                               attribute: .width,
                                                               relatedBy: .equal,
@@ -304,52 +319,140 @@ class JSDatePickerView: UIView
                              centerLabelCenterXConstraint])
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
+    private func switchLabelText(month: Bool, date: Date)
     {
-        calendarView?.reloadDate(newDate: currentDate)
+        let originalY = self.centerLabel.frame.origin.y
         
+        UIView.animate(withDuration: 0.15, animations: {
+            self.centerLabel.frame.origin.y = month ? self.frame.minY : self.frame.maxY - self.centerLabel.frame.height
+            self.centerLabel.alpha = 0.0
+        }, completion: {
+            _ in
+            month ? self.setLabelMonth(date: date) : self.setLabelFullDate(date: date)
+            self.centerLabel.frame.origin.y = month ? self.frame.maxY - self.centerLabel.frame.height : self.frame.minY
+            UIView.animate(withDuration: 0.15, animations: {
+                self.centerLabel.frame.origin.y = originalY
+                self.centerLabel.alpha = 1.0
+            })
+        })
+    }
+    
+    private func setLabelFullDate(date:Date)
+    {
+        let components = Calendar.current.dateComponents(in: .current, from: date)
+        if let day = components.day, let month = components.month, let year = components.year, let weekDay = components.weekday
+        {
+            if let weekDayEnumVal = DayEnum(rawValue: weekDay), let monthEnumVal = MonthEnum(rawValue: month)
+            {
+                self.centerLabel.text = "\(weekDayEnumVal.description), \(monthEnumVal.description) \(day)\(DayEnum.getSuffix(dayNumber: day)), \(year)"
+            }
+        }
+    }
+    
+    private func setLabelMonth(date:Date)
+    {
+        let components = Calendar.current.dateComponents(in: .current, from: date)
+        
+        if let month = components.month, let year = components.year
+        {
+            if let monthEnumVal = MonthEnum(rawValue: month)
+            {
+                self.centerLabel.text = "\(monthEnumVal.description) \(year)"
+            }
+        }
+    }
+    
+    private func move(left:Bool, month:Bool, date: Date)
+    {
+        let components = Calendar.current.dateComponents(in: .current, from: date)
+        
+        if let d = components.day, let m = components.month, let y = components.year, let wd = components.weekday
+        {
+            if let weekDayEnumVal = DayEnum(rawValue: wd), let monthEnumVal = MonthEnum(rawValue: m)
+            {
+                let originalX = self.centerLabel.frame.origin.x
+                
+                UIView.animate(withDuration: 0.15, animations: {
+                    self.centerLabel.frame.origin.x = left ? self.frame.maxX : self.frame.minX
+                    self.centerLabel.alpha = 0.0
+                }, completion: {
+                    _ in
+                    
+                    if month
+                    {
+                        self.centerLabel.text = "\(monthEnumVal.description) \(y)"
+                    }
+                    else
+                    {
+                        self.centerLabel.text = "\(weekDayEnumVal.description), \(monthEnumVal.description) \(d)\(DayEnum.getSuffix(dayNumber: d)), \(y)"
+                    }
+                    self.centerLabel.frame.origin.x = left ? self.frame.minX : self.frame.maxX
+                    UIView.animate(withDuration: 0.15, animations: {
+                        self.centerLabel.frame.origin.x = originalX
+                        self.centerLabel.alpha = 1.0
+                    })
+                })
+            }
+        }
+    }
+
+    @objc private func handleDateTap()
+    {
         if let calendarView = calendarView
         {
-            //set calendar date
-            calendarView.currentDate = currentDate
-            
             //if the calendar has never been added to the superview, add it
             if firstTimeCalendarExpanding
             {
                 addCalendar()
-                firstTimeCalendarExpanding = !firstTimeCalendarExpanding
                 
-                //make sure the right calendar data is shown
-                calendarView.reloadData()
+                //make sure the calendar is the correct width and no spaces are in between
+                self.calendarWidthConstraint.constant = calendarView.cellWidth * 7
+                
+                firstTimeCalendarExpanding = !firstTimeCalendarExpanding
             }
             
             //change the value of the height constraint
-            self.calendarHeightConstraint.constant = (self.isCalendarExpanded == false ?
-                                                                                 calendarView.contentSize.height :
-                                                                                 0.0)
-            
-            let components = Calendar.current.dateComponents(in: .current, from: currentDate)
-            self.centerLabel.text = (self.isCalendarExpanded == false ?
-                                                                "\(MonthEnum(rawValue: components.month!)!.description) \(components.year!)" :
-                                                                "\(components.month!)/\(components.day!)/\(components.year!)")
-            
-            //make sure the calendar is the correct width and no spaces are in between
-            self.calendarWidthConstraint.constant = calendarView.cellWidth * 7
-  
-            self.isCalendarExpanded = !self.isCalendarExpanded
-            
-            //animate the layoutIfNeeded because that is what will change the height
-            UIView.animate(withDuration: 0.2, animations: {
-                self.superview?.layoutIfNeeded()
-            })
+            if self.isCalendarExpanded == false
+            {
+                expandCalendar()
+            }
+            else
+            {
+                collapseCalendar()
+            }
         }
     }
     
     //PUBLIC FUNCTIONS
     
-    public func updateHeight()
+    public func expandCalendar()
     {
-        self.calendarHeightConstraint.constant = (calendarView?.contentSize.height)!
-        self.superview?.layoutIfNeeded()
+        switchLabelText(month: true, date: currentDate)
+        
+        //make sure the right calendar data is shown
+        calendarView?.reloadDate(newDate: currentDate)
+        calendarView?.layoutIfNeeded()
+        
+        if let contentHeight = calendarView?.contentSize.height
+        {
+            self.calendarHeightConstraint.constant = contentHeight
+        }
+        
+        self.isCalendarExpanded = true
+        
+        UIView.animate(withDuration: 0.2, animations: {
+            self.superview?.layoutIfNeeded()
+        })
+    }
+    
+    public func collapseCalendar()
+    {
+        switchLabelText(month: false, date: currentDate)
+        self.calendarHeightConstraint.constant = 0
+        self.isCalendarExpanded = false
+        
+        UIView.animate(withDuration: 0.2, animations: {
+            self.superview?.layoutIfNeeded()
+        })
     }
 }

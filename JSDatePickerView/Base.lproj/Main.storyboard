@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,49 +19,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="nbm-5E-wsl">
-                                <rect key="frame" x="-0.5" y="10.5" width="375.5" height="667"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <view key="tableHeaderView" contentMode="scaleToFill" id="nh0-bg-q1f" customClass="JSDatePickerView" customModule="JSDatePickerView" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="375.5" height="44"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" red="1" green="0.78823529410000004" blue="0.1058823529" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </view>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="exampleCell" id="dys-5b-l9w">
-                                        <rect key="frame" x="0.0" y="72" width="375.5" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dys-5b-l9w" id="wnG-zF-aKh">
-                                            <rect key="frame" x="0.0" y="0.0" width="375.5" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Zmanim Example" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PsO-gS-FlO">
-                                                    <rect key="frame" x="122.5" y="12" width="131.5" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="PsO-gS-FlO" firstAttribute="centerX" secondItem="wnG-zF-aKh" secondAttribute="centerX" id="cYs-RD-rcb"/>
-                                                <constraint firstItem="PsO-gS-FlO" firstAttribute="centerY" secondItem="wnG-zF-aKh" secondAttribute="centerY" id="qEv-UC-Aq4"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
-                            </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8gG-j2-S4v" customClass="JSDatePickerView" customModule="JSDatePickerView" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="20" width="375" height="66.5"/>
+                                <color key="backgroundColor" red="0.99607843139999996" green="0.78823529410000004" blue="0.1058823529" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.56078431370000004" green="0.56078431370000004" blue="0.56078431370000004" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="nbm-5E-wsl" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" id="U6T-5n-20e"/>
-                            <constraint firstItem="nbm-5E-wsl" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="ppl-vA-dec"/>
-                            <constraint firstItem="nbm-5E-wsl" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="utn-pv-fjN"/>
-                            <constraint firstItem="nbm-5E-wsl" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="yEA-5F-ItV"/>
+                            <constraint firstItem="8gG-j2-S4v" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.1" id="Yd8-yT-X7M"/>
+                            <constraint firstItem="8gG-j2-S4v" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="aqu-nO-kmP"/>
+                            <constraint firstItem="8gG-j2-S4v" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="kIX-CF-Mue"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="8gG-j2-S4v" secondAttribute="trailing" id="zQg-oY-3sh"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="tableView" destination="nbm-5E-wsl" id="nT3-ei-6JO"/>
+                        <outlet property="jsdpv" destination="8gG-j2-S4v" id="IxB-lb-kQv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
