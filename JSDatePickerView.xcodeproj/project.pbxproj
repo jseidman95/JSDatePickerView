@@ -32,12 +32,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		420377CF1FF286390012A55C /* JSDatePickerView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = JSDatePickerView.app; path = "/Users/jseidman95/Desktop/IOS Apps/JSDatePickerView/build/Debug-iphoneos/JSDatePickerView.app"; sourceTree = "<absolute>"; };
-		420377E31FF2863A0012A55C /* JSDatePickerViewTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = JSDatePickerViewTests.xctest; path = "/Users/jseidman95/Desktop/IOS Apps/JSDatePickerView/build/Debug-iphoneos/JSDatePickerViewTests.xctest"; sourceTree = "<absolute>"; };
-		420377EE1FF2863A0012A55C /* JSDatePickerViewUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = JSDatePickerViewUITests.xctest; path = "/Users/jseidman95/Desktop/IOS Apps/JSDatePickerView/build/Debug-iphoneos/JSDatePickerViewUITests.xctest"; sourceTree = "<absolute>"; };
 		420378001FF2864E0012A55C /* JSDatePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSDatePickerView.swift; sourceTree = "<group>"; };
 		4264771D1FF2EC5100F376A4 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		42973BAA1FF55D42009DEA7B /* CalenderUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderUtilities.swift; sourceTree = "<group>"; };
+		429CE708200EC6310023292F /* JSDatePickerView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JSDatePickerView.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		429CE70D200EC7540023292F /* JSDatePickerViewTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JSDatePickerViewTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		429CE70E200EC7540023292F /* JSDatePickerViewUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JSDatePickerViewUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		42D92D161FFD59DE00DBD96B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		42D92D1A1FFD5A3800DBD96B /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -72,6 +72,9 @@
 			children = (
 				42D92D1A1FFD5A3800DBD96B /* Default-568h@2x.png */,
 				420377D11FF286390012A55C /* JSDatePickerView */,
+				429CE708200EC6310023292F /* JSDatePickerView.app */,
+				429CE70D200EC7540023292F /* JSDatePickerViewTests.xctest */,
+				429CE70E200EC7540023292F /* JSDatePickerViewUITests.xctest */,
 			);
 			sourceTree = "<group>";
 		};
@@ -103,7 +106,7 @@
 			);
 			name = JSDatePickerView;
 			productName = JSDatePickerView;
-			productReference = 420377CF1FF286390012A55C /* JSDatePickerView.app */;
+			productReference = 429CE708200EC6310023292F /* JSDatePickerView.app */;
 			productType = "com.apple.product-type.application";
 		};
 		420377E21FF2863A0012A55C /* JSDatePickerViewTests */ = {
@@ -121,7 +124,7 @@
 			);
 			name = JSDatePickerViewTests;
 			productName = JSDatePickerViewTests;
-			productReference = 420377E31FF2863A0012A55C /* JSDatePickerViewTests.xctest */;
+			productReference = 429CE70D200EC7540023292F /* JSDatePickerViewTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		420377ED1FF2863A0012A55C /* JSDatePickerViewUITests */ = {
@@ -139,7 +142,7 @@
 			);
 			name = JSDatePickerViewUITests;
 			productName = JSDatePickerViewUITests;
-			productReference = 420377EE1FF2863A0012A55C /* JSDatePickerViewUITests.xctest */;
+			productReference = 429CE70E200EC7540023292F /* JSDatePickerViewUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */

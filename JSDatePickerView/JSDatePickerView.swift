@@ -109,8 +109,14 @@ public class JSDatePickerView: UIView
     private func makeButtons()
     {
         //add images
-        leftButton.setImage(#imageLiteral(resourceName: "arrowLeft"), for: .normal)
-        rightButton.setImage(#imageLiteral(resourceName: "arrowRight"), for: .normal)
+        leftButton.setImage(UIImage(named: "arrowLeft",
+                                    in: Bundle(for: JSDatePickerView.self),
+                                    compatibleWith: nil),
+                            for: .normal)
+        rightButton.setImage(UIImage(named: "arrowRight",
+                                     in: Bundle(for: JSDatePickerView.self),
+                                     compatibleWith: nil),
+                             for: .normal)
         
         //add actions
         leftButton.addTarget(self,  action: #selector(leftButtonAction),  for: .touchUpInside)
