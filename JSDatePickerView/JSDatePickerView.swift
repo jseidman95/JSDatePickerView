@@ -109,11 +109,11 @@ public class JSDatePickerView: UIView
     private func makeButtons()
     {
         //add images
-        leftButton.setImage(UIImage(named: "arrowLeft",
+        leftButton.setImage(UIImage(named: "JSDatePickerView.bundle/arrowLeft",
                                     in: Bundle(for: JSDatePickerView.self),
                                     compatibleWith: nil),
                             for: .normal)
-        rightButton.setImage(UIImage(named: "arrowRight",
+        rightButton.setImage(UIImage(named: "JSDatePickerView.bundle/arrowRight",
                                      in: Bundle(for: JSDatePickerView.self),
                                      compatibleWith: nil),
                              for: .normal)
