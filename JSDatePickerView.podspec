@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'JSDatePickerView'
-  s.version          = '0.1.2'
+  s.version          = '0.1.3'
   s.summary          = 'This is a custom DatePicker UIView'
  
   s.description      = <<-DESC
