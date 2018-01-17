@@ -17,6 +17,7 @@ public class JSDatePickerView: UIView
     private var calendarWidthConstraint    :NSLayoutConstraint = NSLayoutConstraint()
     
     //PUBLIC VARS
+    public var calendarPresentingView: UIView? = nil
     public let leftButton  : UIButton  = UIButton(type: .custom)
     public let rightButton : UIButton  = UIButton()
     public let centerLabel : UILabel   = UILabel()
@@ -186,7 +187,7 @@ public class JSDatePickerView: UIView
             calendarView.translatesAutoresizingMaskIntoConstraints = false
             
             //add it to superview before so constraints will be applied
-            self.superview?.addSubview(calendarView)
+            self.calendarPresentingView?.addSubview(calendarView)
             
             //make the constraints
             let calendarCenterConstraint = NSLayoutConstraint(item: calendarView,
@@ -221,13 +222,13 @@ public class JSDatePickerView: UIView
                                                           constant: 0.0)
             
             //add all the constraints
-            self.superview?.addConstraints([calendarCenterConstraint,
+            self.calendarPresentingView?.addConstraints([calendarCenterConstraint,
                                             calendarTopConstraint,
                                             calendarWidthConstraint,
                                             calendarHeightConstraint])
       
             //make sure layout applies the constraints
-            self.superview?.layoutIfNeeded()
+            self.calendarPresentingView?.layoutIfNeeded()
         }
     }
     
@@ -447,7 +448,7 @@ public class JSDatePickerView: UIView
         self.isCalendarExpanded = true
         
         UIView.animate(withDuration: 0.2, animations: {
-            self.superview?.layoutIfNeeded()
+            self.calendarPresentingView?.layoutIfNeeded()
         })
     }
     
@@ -458,7 +459,7 @@ public class JSDatePickerView: UIView
         self.isCalendarExpanded = false
         
         UIView.animate(withDuration: 0.2, animations: {
-            self.superview?.layoutIfNeeded()
+            self.calendarPresentingView?.layoutIfNeeded()
         })
     }
 }
