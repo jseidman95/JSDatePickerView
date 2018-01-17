@@ -8,6 +8,11 @@
 
 import UIKit
 
+public protocol JSDatePickerViewDelegate
+{
+    func handleDateChange()
+}
+
 public class JSDatePickerView: UIView
 {
     //PRIVATE VARS
@@ -18,6 +23,7 @@ public class JSDatePickerView: UIView
     
     //PUBLIC VARS
     public var calendarPresentingView: UIView? = nil
+    public var delegate    : JSDatePickerViewDelegate? = nil
     public let leftButton  : UIButton  = UIButton(type: .custom)
     public let rightButton : UIButton  = UIButton()
     public let centerLabel : UILabel   = UILabel()
@@ -26,6 +32,9 @@ public class JSDatePickerView: UIView
     public private(set) var isCalendarExpanded:Bool = false //helps with the presentation of the calendar
     public var calendarWidth:CGFloat = 300.0
     public var currentDate:Date = Date()
+    {
+        didSet { delegate?.handleDateChange() }
+    }
     public var cellBackgroundColor: UIColor = UIColor()
     {
         didSet { self.calendarView?.cellBackgroundColor = cellBackgroundColor }
