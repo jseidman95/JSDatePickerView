@@ -15,11 +15,11 @@ public protocol JSDatePickerViewDelegate
 
 public class JSDatePickerView: UIView
 {
-    //PRIVATE VARS
-    private var calendarView:CalendarView? = nil         //holds the reference to the CalendarView
-    private var firstTimeCalendarExpanding :Bool = true  //used to see if the calendar needs to be added or presented
-    private var calendarHeightConstraint   :NSLayoutConstraint = NSLayoutConstraint()
-    private var calendarWidthConstraint    :NSLayoutConstraint = NSLayoutConstraint()
+    //PRIVATE/INTERNAL VARS
+    private  var calendarView:CalendarView? = nil         //holds the reference to the CalendarView
+    private  var firstTimeCalendarExpanding :Bool = true  //used to see if the calendar needs to be added or presented
+    internal var calendarHeightConstraint   :NSLayoutConstraint = NSLayoutConstraint()
+    private  var calendarWidthConstraint    :NSLayoutConstraint = NSLayoutConstraint()
     
     //PUBLIC VARS
     public var calendarPresentingView: UIView? = nil

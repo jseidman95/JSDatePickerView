@@ -373,6 +373,10 @@ internal class CalendarView:UICollectionView,UICollectionViewDelegate,UICollecti
             let range = NSMakeRange(0, self.numberOfSections)
             let sections = NSIndexSet(indexesIn: range)
             self.reloadSections(sections as IndexSet)
-        }, completion: nil)
+        }, completion: {
+            _ in
+            self.parent?.calendarHeightConstraint.constant = self.contentSize.height
+            self.parent?.calendarPresentingView?.layoutIfNeeded()
+        })
     }
 }
