@@ -8,17 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		35D2761C2A02EB441E68766D /* Pods_JSDatePickerViewTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CD351B523AD3CB9C9152C84 /* Pods_JSDatePickerViewTests.framework */; };
-		420378011FF2864E0012A55C /* JSDatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420378001FF2864E0012A55C /* JSDatePickerView.swift */; };
 		422A948A202409AC00010D2F /* Cells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422A9489202409AC00010D2F /* Cells.swift */; };
 		42315F0820220CAE00ADC50C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42315F0720220CAD00ADC50C /* AppDelegate.swift */; };
 		42315F0A20220CB600ADC50C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42315F0920220CB600ADC50C /* Main.storyboard */; };
 		42315F0C20220CC300ADC50C /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42315F0B20220CC300ADC50C /* Info.plist */; };
 		42315F1220239D7C00ADC50C /* DateHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42315F1120239D7C00ADC50C /* DateHeaderView.swift */; };
-		4264771E1FF2EC5100F376A4 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4264771D1FF2EC5100F376A4 /* CalendarView.swift */; };
 		42973BAB1FF55D42009DEA7B /* CalenderUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42973BAA1FF55D42009DEA7B /* CalenderUtilities.swift */; };
-		42A50E662030AE2D00B19AAB /* CalendarCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A50E652030AE2D00B19AAB /* CalendarCollectionView.swift */; };
 		42D92D171FFD59DE00DBD96B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42D92D161FFD59DE00DBD96B /* Assets.xcassets */; };
 		42D92D1B1FFD5A3800DBD96B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42D92D1A1FFD5A3800DBD96B /* Default-568h@2x.png */; };
+		42E484B72035499C007C3271 /* JSDatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E484B62035499C007C3271 /* JSDatePickerView.swift */; };
+		42E484B920354A45007C3271 /* DatePickerCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E484B820354A45007C3271 /* DatePickerCollectionView.swift */; };
+		42E484BB2035D9D8007C3271 /* CalendarCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E484BA2035D9D8007C3271 /* CalendarCollectionView.swift */; };
 		4F2BD7D6CB9AEF4F7F6CEBE2 /* Pods_JSDatePickerViewUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E810CBD6DDC76193E4F7E75 /* Pods_JSDatePickerViewUITests.framework */; };
 		C3A9EB8DCE45760BF24655AC /* Pods_JSDatePickerView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6E6570288E1EE4AA50311A7 /* Pods_JSDatePickerView.framework */; };
 /* End PBXBuildFile section */
@@ -44,7 +44,6 @@
 		1B1010F7F103AFD34D0105AD /* Pods-JSDatePickerViewUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JSDatePickerViewUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JSDatePickerViewUITests/Pods-JSDatePickerViewUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		20D1080F26CE747AE2295024 /* Pods-JSDatePickerViewTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JSDatePickerViewTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-JSDatePickerViewTests/Pods-JSDatePickerViewTests.release.xcconfig"; sourceTree = "<group>"; };
 		33BCF8655DAA662149FF9541 /* Pods-JSDatePickerView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JSDatePickerView.release.xcconfig"; path = "Pods/Target Support Files/Pods-JSDatePickerView/Pods-JSDatePickerView.release.xcconfig"; sourceTree = "<group>"; };
-		420378001FF2864E0012A55C /* JSDatePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSDatePickerView.swift; sourceTree = "<group>"; };
 		422A94872023FFF500010D2F /* JSDatePickerViewTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JSDatePickerViewTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		422A94882023FFF500010D2F /* JSDatePickerViewUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JSDatePickerViewUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		422A9489202409AC00010D2F /* Cells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cells.swift; sourceTree = "<group>"; };
@@ -52,12 +51,13 @@
 		42315F0920220CB600ADC50C /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		42315F0B20220CC300ADC50C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		42315F1120239D7C00ADC50C /* DateHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHeaderView.swift; sourceTree = "<group>"; };
-		4264771D1FF2EC5100F376A4 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		42973BAA1FF55D42009DEA7B /* CalenderUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderUtilities.swift; sourceTree = "<group>"; };
 		429CE708200EC6310023292F /* JSDatePickerView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JSDatePickerView.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		42A50E652030AE2D00B19AAB /* CalendarCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCollectionView.swift; sourceTree = "<group>"; };
 		42D92D161FFD59DE00DBD96B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		42D92D1A1FFD5A3800DBD96B /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		42E484B62035499C007C3271 /* JSDatePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSDatePickerView.swift; sourceTree = "<group>"; };
+		42E484B820354A45007C3271 /* DatePickerCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerCollectionView.swift; sourceTree = "<group>"; };
+		42E484BA2035D9D8007C3271 /* CalendarCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCollectionView.swift; sourceTree = "<group>"; };
 		487C026CD7BFAF6619107F81 /* Pods-JSDatePickerViewUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JSDatePickerViewUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-JSDatePickerViewUITests/Pods-JSDatePickerViewUITests.release.xcconfig"; sourceTree = "<group>"; };
 		5E810CBD6DDC76193E4F7E75 /* Pods_JSDatePickerViewUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JSDatePickerViewUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		907E8C1E6D3B72701661D4C0 /* Pods-JSDatePickerView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JSDatePickerView.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JSDatePickerView/Pods-JSDatePickerView.debug.xcconfig"; sourceTree = "<group>"; };
@@ -110,13 +110,13 @@
 		420377D11FF286390012A55C /* JSDatePickerView */ = {
 			isa = PBXGroup;
 			children = (
-				420378001FF2864E0012A55C /* JSDatePickerView.swift */,
 				422A9489202409AC00010D2F /* Cells.swift */,
 				42315F1120239D7C00ADC50C /* DateHeaderView.swift */,
 				42315F0720220CAD00ADC50C /* AppDelegate.swift */,
 				42315F0920220CB600ADC50C /* Main.storyboard */,
-				4264771D1FF2EC5100F376A4 /* CalendarView.swift */,
-				42A50E652030AE2D00B19AAB /* CalendarCollectionView.swift */,
+				42E484B820354A45007C3271 /* DatePickerCollectionView.swift */,
+				42E484BA2035D9D8007C3271 /* CalendarCollectionView.swift */,
+				42E484B62035499C007C3271 /* JSDatePickerView.swift */,
 				42973BAA1FF55D42009DEA7B /* CalenderUtilities.swift */,
 				42D92D161FFD59DE00DBD96B /* Assets.xcassets */,
 				42315F0B20220CC300ADC50C /* Info.plist */,
@@ -443,10 +443,10 @@
 			files = (
 				42315F1220239D7C00ADC50C /* DateHeaderView.swift in Sources */,
 				422A948A202409AC00010D2F /* Cells.swift in Sources */,
+				42E484B920354A45007C3271 /* DatePickerCollectionView.swift in Sources */,
 				42315F0820220CAE00ADC50C /* AppDelegate.swift in Sources */,
-				420378011FF2864E0012A55C /* JSDatePickerView.swift in Sources */,
-				42A50E662030AE2D00B19AAB /* CalendarCollectionView.swift in Sources */,
-				4264771E1FF2EC5100F376A4 /* CalendarView.swift in Sources */,
+				42E484BB2035D9D8007C3271 /* CalendarCollectionView.swift in Sources */,
+				42E484B72035499C007C3271 /* JSDatePickerView.swift in Sources */,
 				42973BAB1FF55D42009DEA7B /* CalenderUtilities.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

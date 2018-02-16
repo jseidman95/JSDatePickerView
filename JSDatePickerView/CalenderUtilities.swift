@@ -8,6 +8,11 @@
 
 import UIKit
 
+internal protocol DualCollectionViewScrollDelegate
+{
+  func collectionViewDidScroll(_ collectionView:UICollectionView)
+  func collectionViewDidEndScroll(_ collectionView:UICollectionView, withDifferenceOf diff:Int)
+}
 //This enum holds month/day data that is used in the calendar
 public enum MonthEnum: Int, CustomStringConvertible
 {
@@ -136,118 +141,151 @@ public enum DayEnum: Int, CustomStringConvertible
 //the variable are nullable because there could either be date data or just day labels
 internal struct CalendarDay
 {
-    public var day       : DayEnum?
-    public var month     : MonthEnum?
-    public var dayNumber : Int?
-    public var year      : Int?
-    public var labelText : String?
-    public var grayed    : Bool
+  public var day       : DayEnum?
+  public var month     : MonthEnum?
+  public var dayNumber : Int?
+  public var year      : Int?
+  public var labelText : String?
+  public var grayed    : Bool
+  public var date      : Date?
 }
 
 internal class CalendarUtil:NSObject
 {
-    public static func getCalendarData(for date: Date) -> [CalendarDay]
+  public static func getCalendarData(for date: Date) -> [CalendarDay]
+  {
+      var dataArray = [CalendarDay]()
+    
+      //add the day labels first
+      for i in 1...7 { dataArray.append(CalendarDay(day: nil,
+                                                    month: nil,
+                                                    dayNumber: nil,
+                                                    year: nil,
+                                                    labelText: DayEnum(rawValue: i)?.description,
+                                                    grayed:false,
+                                                    date: nil))}
+
+      //get date components from given date
+      let components = Calendar.current.dateComponents([.month,.day,.year], from: date)
+    
+      //get first day of the month date
+      var currDate = getFirstOfMonth(components)
+
+      //roll back to first previous sunday (if applicable)
+      while !isTodaySunday(currDate)
+      {
+          currDate = Calendar.current.date(byAdding: .day, value: -1, to: currDate)!
+      }
+
+      //roll forward from the sunday until the last of the month
+      while currDate <= getLastOfMonth(components)
+      {
+          //get date components of current date
+          let components = Calendar.current.dateComponents([.month, .weekday, .day, .year], from: currDate)
+        
+          //append the date to the date array
+          dataArray.append(CalendarDay(day: DayEnum(rawValue: components.weekday!),
+                                       month: MonthEnum(rawValue: components.month!),
+                                       dayNumber: components.day,
+                                       year: components.year,
+                                       labelText: nil,
+                                       grayed: components.month != Calendar.current.dateComponents([.month], from: date).month,
+                                       date: currDate))
+        
+          //increment
+          if let nextDate = Calendar.current.date(byAdding: .day, value: 1, to: currDate)
+          {
+              currDate = nextDate
+          }
+          else { break }
+      }
+    
+      //go until just before the last saturday
+      while(Calendar.current.dateComponents([.weekday], from: currDate).weekday != DayEnum.Sunday.rawValue)
+      {
+          //get current date components
+          let components = Calendar.current.dateComponents([.month, .weekday, .day, .year], from: currDate)
+        
+          //append the date
+          dataArray.append(CalendarDay(day: DayEnum(rawValue: components.weekday!),
+                                       month: MonthEnum(rawValue: components.month!),
+                                       dayNumber: components.day,
+                                       year: components.year,
+                                       labelText: nil,
+                                       grayed:true,
+                                       date: currDate))
+        
+          //increment
+          if let nextDate = Calendar.current.date(byAdding: .day, value: 1, to: currDate)
+          {
+              currDate = nextDate
+          }
+          else { break }
+      }
+    
+      return dataArray
+  }
+  
+  public static func rotate(calendarArray:[CalendarDay]) -> [CalendarDay]
+  {
+    var cal:[CalendarDay] = []
+    
+    for i in 0..<7
     {
-        var dataArray = [CalendarDay]()
-        
-        //add the day labels first
-        for i in 1...7 { dataArray.append(CalendarDay(day: nil,
-                                                      month: nil,
-                                                      dayNumber: nil,
-                                                      year: nil,
-                                                      labelText: DayEnum(rawValue: i)?.description,
-                                                      grayed:false))}
-
-        //get date components from given date
-        let components = Calendar.current.dateComponents([.month,.day,.year], from: date)
-        
-        //get first day of the month date
-        var currDate = getFirstOfMonth(components)
-
-        //roll back to first previous sunday (if applicable)
-        while !isTodaySunday(currDate)
-        {
-            currDate = Calendar.current.date(byAdding: .day, value: -1, to: currDate)!
-        }
-
-        //roll forward from the sunday until the last of the month
-        while currDate <= getLastOfMonth(components)
-        {
-            //get date components of current date
-            let components = Calendar.current.dateComponents([.month, .weekday, .day, .year], from: currDate)
-            
-            //append the date to the date array
-            dataArray.append(CalendarDay(day: DayEnum(rawValue: components.weekday!),
-                                         month: MonthEnum(rawValue: components.month!),
-                                         dayNumber: components.day,
-                                         year: components.year,
-                                         labelText: nil,
-                                         grayed: components.month != Calendar.current.dateComponents([.month], from: date).month))
-            
-            //increment
-            if let nextDate = Calendar.current.date(byAdding: .day, value: 1, to: currDate)
-            {
-                currDate = nextDate
-            }
-            else { break }
-        }
-        
-        //go until just before the last saturday
-        while(Calendar.current.dateComponents([.weekday], from: currDate).weekday != DayEnum.Sunday.rawValue)
-        {
-            //get current date components
-            let components = Calendar.current.dateComponents([.month, .weekday, .day, .year], from: currDate)
-            
-            //append the date
-            dataArray.append(CalendarDay(day: DayEnum(rawValue: components.weekday!),
-                                         month: MonthEnum(rawValue: components.month!),
-                                         dayNumber: components.day,
-                                         year: components.year,
-                                         labelText: nil,
-                                         grayed:true))
-            
-            //increment
-            if let nextDate = Calendar.current.date(byAdding: .day, value: 1, to: currDate)
-            {
-                currDate = nextDate
-            }
-            else { break }
-        }
-        
-        return dataArray
+      cal.append(calendarArray[i])
+      var j = 0
+      for _ in 1..<calendarArray.count / 7
+      {
+        j += 7
+        cal.append(calendarArray[i + j])
+      }
     }
     
-    //check if the given day is a sunday
-    private static func isTodaySunday(_ date : Date) -> Bool
-    {
-        let components = Calendar.current.dateComponents([.weekday], from: date)
-        let weekDay = components.weekday
-        
-        return weekDay == 1
-    }
+    return cal
+  }
+  
+  //check if the given day is a sunday
+  private static func isTodaySunday(_ date : Date) -> Bool
+  {
+      let components = Calendar.current.dateComponents([.weekday], from: date)
+      let weekDay = components.weekday
     
-    //get the first of the month for the given components
-    private static func getFirstOfMonth(_ components: DateComponents) -> Date
-    {
-        var newComponents = components
-        newComponents.day = 1
-        
-        return Calendar.current.date(from: newComponents)!
-    }
+      return weekDay == 1
+  }
+  
+  //get the first of the month for the given components
+  private static func getFirstOfMonth(_ components: DateComponents) -> Date
+  {
+      var newComponents = components
+      newComponents.day = 1
     
-    //get the last of the month from the given components
-    private static func getLastOfMonth(_ components: DateComponents) -> Date
-    {
-        var newComponents = components
-        
-        if let monthRaw = components.month
-        {
-            if let month = MonthEnum(rawValue: monthRaw)
-            {
-                newComponents.day = MonthEnum.getDays(month: month)
-            }
-        }
-        
-        return Calendar.current.date(from: newComponents)!
-    }
+      return Calendar.current.date(from: newComponents)!
+  }
+  
+  //get the last of the month from the given components
+  private static func getLastOfMonth(_ components: DateComponents) -> Date
+  {
+      var newComponents = components
+    
+      if let monthRaw = components.month
+      {
+          if let month = MonthEnum(rawValue: monthRaw)
+          {
+              newComponents.day = MonthEnum.getDays(month: month)
+          }
+      }
+    
+      return Calendar.current.date(from: newComponents)!
+  }
+}
+
+extension Date
+{
+  func getString(from dateString:String) -> String
+  {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = dateString
+    let strMonth = dateFormatter.string(from: self)
+    return strMonth
+  }
 }

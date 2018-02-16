@@ -10,8 +10,8 @@ import UIKit
 
 public class DateHeaderView: UICollectionReusableView
 {
-  // PRIVATE VARS
-  private var dateLabel: UILabel = UILabel()
+  // PUBLIC VARS
+  public var dateLabel: UILabel = UILabel()
   
   // INITS
   // init from code

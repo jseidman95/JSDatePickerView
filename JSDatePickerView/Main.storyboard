@@ -19,16 +19,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ILI-Jn-pjf" customClass="CalendarView" customModule="JSDatePickerView" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Imw-ch-NDW" customClass="JSDatePickerView" customModule="JSDatePickerView" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="177" width="375" height="333.5"/>
+                                <color key="backgroundColor" red="0.30798611110000002" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="ILI-Jn-pjf" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="C7S-ic-9bb"/>
-                            <constraint firstItem="ILI-Jn-pjf" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="KBV-uf-62a"/>
-                            <constraint firstItem="ILI-Jn-pjf" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.5" id="RKa-ZD-dE1"/>
-                            <constraint firstItem="ILI-Jn-pjf" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="qJD-62-FBf"/>
+                            <constraint firstItem="Imw-ch-NDW" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="6de-jz-nH6"/>
+                            <constraint firstItem="Imw-ch-NDW" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.5" id="7bO-j7-vV2"/>
+                            <constraint firstItem="Imw-ch-NDW" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="Jkh-2J-iUs"/>
+                            <constraint firstItem="Imw-ch-NDW" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="gDY-tw-SYB"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>

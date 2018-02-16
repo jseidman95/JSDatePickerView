@@ -1,11 +1,11 @@
 PODS:
-  - EAInfiniteScrollView (0.1.3)
+  - EAInfiniteScrollView (0.1.4)
 
 DEPENDENCIES:
   - EAInfiniteScrollView
 
 SPEC CHECKSUMS:
-  EAInfiniteScrollView: 904b882e52bbd8e18d5ce4164636fe81047f2913
+  EAInfiniteScrollView: ca3012128ba7c207f66d2bf9b8222ceec4479062
 
 PODFILE CHECKSUM: 647a049a3577864baa2bcb6af2be9c5efabe3c0e
 
