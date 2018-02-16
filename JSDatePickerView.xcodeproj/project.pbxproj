@@ -12,7 +12,6 @@
 		42315F0820220CAE00ADC50C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42315F0720220CAD00ADC50C /* AppDelegate.swift */; };
 		42315F0A20220CB600ADC50C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42315F0920220CB600ADC50C /* Main.storyboard */; };
 		42315F0C20220CC300ADC50C /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42315F0B20220CC300ADC50C /* Info.plist */; };
-		42315F1220239D7C00ADC50C /* DateHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42315F1120239D7C00ADC50C /* DateHeaderView.swift */; };
 		42973BAB1FF55D42009DEA7B /* CalenderUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42973BAA1FF55D42009DEA7B /* CalenderUtilities.swift */; };
 		42D92D171FFD59DE00DBD96B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42D92D161FFD59DE00DBD96B /* Assets.xcassets */; };
 		42D92D1B1FFD5A3800DBD96B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42D92D1A1FFD5A3800DBD96B /* Default-568h@2x.png */; };
@@ -50,7 +49,6 @@
 		42315F0720220CAD00ADC50C /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		42315F0920220CB600ADC50C /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		42315F0B20220CC300ADC50C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		42315F1120239D7C00ADC50C /* DateHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHeaderView.swift; sourceTree = "<group>"; };
 		42973BAA1FF55D42009DEA7B /* CalenderUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderUtilities.swift; sourceTree = "<group>"; };
 		429CE708200EC6310023292F /* JSDatePickerView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JSDatePickerView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42D92D161FFD59DE00DBD96B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -111,7 +109,6 @@
 			isa = PBXGroup;
 			children = (
 				422A9489202409AC00010D2F /* Cells.swift */,
-				42315F1120239D7C00ADC50C /* DateHeaderView.swift */,
 				42315F0720220CAD00ADC50C /* AppDelegate.swift */,
 				42315F0920220CB600ADC50C /* Main.storyboard */,
 				42E484B820354A45007C3271 /* DatePickerCollectionView.swift */,
@@ -441,7 +438,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				42315F1220239D7C00ADC50C /* DateHeaderView.swift in Sources */,
 				422A948A202409AC00010D2F /* Cells.swift in Sources */,
 				42E484B920354A45007C3271 /* DatePickerCollectionView.swift in Sources */,
 				42315F0820220CAE00ADC50C /* AppDelegate.swift in Sources */,
