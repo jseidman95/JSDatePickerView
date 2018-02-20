@@ -18,6 +18,8 @@ class DatePickerCollectionView: UICollectionView,
   public var preloadedCellCount:Int = 50
   public var pickerMode:Calendar.Component = .month
   public var dualScrollDelegate:DualCollectionViewScrollDelegate? = nil
+  public var touchTransferDelegate:CollectionViewTouchTransferDelegate? = nil
+  
   // INTERNAl VARS
   internal var dateArray:[Date] = []
   
@@ -140,6 +142,12 @@ class DatePickerCollectionView: UICollectionView,
                       sizeForItemAt indexPath: IndexPath) -> CGSize
   {
     return self.frame.size
+  }
+  
+  // UICollectionViewDelegate
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
+  {
+    touchTransferDelegate?.collectionView(collectionView, didSelectItemAt: indexPath)
   }
   
   // UIScrollViewDelegate

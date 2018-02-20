@@ -13,6 +13,12 @@ internal protocol DualCollectionViewScrollDelegate
   func collectionViewDidScroll(_ collectionView:UICollectionView)
   func collectionViewDidEndScroll(_ collectionView:UICollectionView, withDifferenceOf diff:Int)
 }
+
+internal protocol CollectionViewTouchTransferDelegate
+{
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
+}
+
 //This enum holds month/day data that is used in the calendar
 public enum MonthEnum: Int, CustomStringConvertible
 {

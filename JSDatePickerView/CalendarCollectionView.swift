@@ -21,7 +21,6 @@ class CalendarCollectionView: UICollectionView,
                                                 blue: 233/255.0,
                                                 alpha: 1.0)
   
-  
   // PUBLIC VARS
   public var currentDate:Date = Date() //The current date of the calendar
   public var cellBackgroundColor:UIColor = UIColor.white   //The background color of the cell
@@ -32,6 +31,7 @@ class CalendarCollectionView: UICollectionView,
   public var selectedCircleDistanceFromEdge:CGFloat = 0.0  //The circle's distance from the edge of the cell
   public var font:UIFont = UIFont.systemFont(ofSize: 12.0) //The font of the cells
   public var dualScrollDelegate:DualCollectionViewScrollDelegate? = nil
+  public var touchTransferDelegate:CollectionViewTouchTransferDelegate? = nil
   public var preloadedCellCount:Int = 50
   
   // INTERNAl VARS
@@ -193,7 +193,7 @@ class CalendarCollectionView: UICollectionView,
                              sizeForItemAt indexPath: IndexPath) -> CGSize
   {
     var cellSize = CGSize()
-    
+   
     // get flow layout
     let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout
     
@@ -224,6 +224,11 @@ class CalendarCollectionView: UICollectionView,
     UIView.performWithoutAnimation {
       cell.layoutIfNeeded()
     }
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
+  {
+    touchTransferDelegate?.collectionView(collectionView, didSelectItemAt: indexPath)
   }
   
   // UIScrollViewDelegate

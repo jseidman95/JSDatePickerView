@@ -1,0 +1,42 @@
+//
+//  MainViewController.swift
+//  JSDatePickerView
+//
+//  Created by Jesse Seidman on 2/20/18.
+//  Copyright © 2018 Jesse Seidman. All rights reserved.
+//
+
+import UIKit
+
+class MainViewController: UIViewController
+{
+  override func viewDidLoad()
+  {
+    super.viewDidLoad()
+
+    // Do any additional setup after loading the view.
+    let myFrame = CGRect(x: 0.0,
+                         y: 0.0,
+                         width: self.view.frame.width,
+                         height: 150.0)
+    let js = JSDatePickerView(frame: myFrame)
+    
+    self.view.addSubview(js)
+    js.translatesAutoresizingMaskIntoConstraints = false
+    
+    js.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+    js.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
+    js.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
+    
+    let myView = UIView(frame: self.view.frame)
+    myView.backgroundColor = UIColor.red
+    myView.translatesAutoresizingMaskIntoConstraints = false
+    
+    self.view.addSubview(myView)
+    
+    myView.topAnchor.constraint(equalTo: js.bottomAnchor).isActive = true
+    myView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
+    myView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
+    myView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+  }
+}
