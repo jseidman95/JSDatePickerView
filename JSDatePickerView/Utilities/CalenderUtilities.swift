@@ -12,6 +12,7 @@ internal protocol DualCollectionViewScrollDelegate
 {
   func collectionViewDidScroll(_ collectionView:UICollectionView)
   func collectionViewDidEndScroll(_ collectionView:UICollectionView, withDifferenceOf diff:Int)
+  func collectionViewWillBeginDragging(_ collectionView:UICollectionView)
 }
 
 internal protocol CollectionViewTouchTransferDelegate
@@ -293,5 +294,10 @@ extension Date
     dateFormatter.dateFormat = dateString
     let strMonth = dateFormatter.string(from: self)
     return strMonth
+  }
+  
+  func getMonth() -> Int
+  {
+    return Calendar.current.component(.month, from: self)
   }
 }

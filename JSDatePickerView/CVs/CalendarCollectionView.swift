@@ -14,7 +14,7 @@ class CalendarCollectionView: UICollectionView,
                               UICollectionViewDelegateFlowLayout
 {
   // PRIVATE VARS
-  internal let daysPerLine:Int = 7             //This variable holds the amount of cells that are displayed per line
+  private let daysPerLine:Int = 7 //This variable holds the amount of cells that are displayed per line
   private var selectedCell:CalendarViewCell? = nil
   private var grayedCellColor:UIColor = UIColor(red: 231/255.0,
                                                 green: 232/255.0,
@@ -22,12 +22,11 @@ class CalendarCollectionView: UICollectionView,
                                                 alpha: 1.0)
   
   // PUBLIC VARS
-  public var currentDate:Date = Date() //The current date of the calendar
   public var cellBackgroundColor:UIColor = UIColor.white   //The background color of the cell
   public var selectedCircleColor:UIColor = UIColor(red:   255/255.0, //The color of circle when the user selects
-    green: 51/255.0,
-    blue:  51/255.0,
-    alpha: 1.0)
+                                                   green: 51/255.0,
+                                                   blue:  51/255.0,
+                                                   alpha: 1.0)
   public var selectedCircleDistanceFromEdge:CGFloat = 0.0  //The circle's distance from the edge of the cell
   public var font:UIFont = UIFont.systemFont(ofSize: 12.0) //The font of the cells
   public var dualScrollDelegate:DualCollectionViewScrollDelegate? = nil
@@ -36,6 +35,7 @@ class CalendarCollectionView: UICollectionView,
   
   // INTERNAl VARS
   internal var monthArray:[[CalendarDay]] = []
+  internal var currentDate:Date = Date() //The current date of the calendar
   
   // PUBLIC GET PRIVATE SET VARS
   public private(set) var cellWidth:CGFloat = 0.0 //helps the picker view set frame, dont want the user messing with this
@@ -93,16 +93,9 @@ class CalendarCollectionView: UICollectionView,
   
   private func shiftDateArray(diff:Int)
   {
-//    // get current cell data
-//    let currentCell = self.visibleCells[0]
-//    let currentIndexPath = self.indexPath(for: currentCell)
-//
-//    // calculated difference from middle
-//    let diff = (currentIndexPath?.section)! - monthArray.count / 2
-    
     // set new currentDate
     currentDate = Calendar.current.date(byAdding: .month, value: diff, to: currentDate)!
-    print("cal diff \(diff)")
+
     if diff > 0
     {
       for i in 0..<monthArray.count
@@ -176,6 +169,14 @@ class CalendarCollectionView: UICollectionView,
       {
         cell?.dateNumberLabel.text = "\(dayNumber)"
       }
+      let calComponents = Calendar.current.dateComponents([.month,.day,.year],
+                                                             from: monthArray[indexPath.section][indexPath.row].date!)
+      let currentComponents = Calendar.current.dateComponents([.month,.day,.year], from: Date())
+      if calComponents == currentComponents
+      {
+        cell?.dateNumberLabel.font = UIFont(name: (cell?.dateNumberLabel.font.fontName)!,
+                                            size: (cell?.dateNumberLabel.font.pointSize)! + 10.0)
+      }
     }
     
     // if the calendar data is not from this month, it should be grayed out slightly
@@ -234,16 +235,23 @@ class CalendarCollectionView: UICollectionView,
   // UIScrollViewDelegate
   func scrollViewDidEndDecelerating(_ scrollView: UIScrollView)
   {
+    currentDate = monthArray[Int(self.contentOffset.x / self.frame.width)][16].date!
+    
     // calculated difference from middle
     let diff = Int(self.contentOffset.x / self.frame.width) - monthArray.count / 2
     
-    shiftAndScroll(diff:diff)
+    self.shiftAndScroll(diff:diff)
     dualScrollDelegate?.collectionViewDidEndScroll(self, withDifferenceOf: diff)
   }
   
   func scrollViewDidScroll(_ scrollView: UIScrollView)
   {
     dualScrollDelegate?.collectionViewDidScroll(self)
+  }
+  
+  func scrollViewWillBeginDragging(_ scrollView: UIScrollView)
+  {
+    dualScrollDelegate?.collectionViewWillBeginDragging(self)
   }
   
   // INTERNAL FUNCS

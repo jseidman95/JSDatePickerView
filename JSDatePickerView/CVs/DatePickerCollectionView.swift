@@ -13,15 +13,13 @@ class DatePickerCollectionView: UICollectionView,
                                 UICollectionViewDataSource,
                                 UICollectionViewDelegateFlowLayout
 {
-  // PUBLIC VARS
-  public var currentDate = Date()
-  public var preloadedCellCount:Int = 50
-  public var pickerMode:Calendar.Component = .month
-  public var dualScrollDelegate:DualCollectionViewScrollDelegate? = nil
-  public var touchTransferDelegate:CollectionViewTouchTransferDelegate? = nil
-  
   // INTERNAl VARS
   internal var dateArray:[Date] = []
+  internal var dualScrollDelegate:DualCollectionViewScrollDelegate? = nil
+  internal var touchTransferDelegate:CollectionViewTouchTransferDelegate? = nil
+  internal var currentDate = Date()
+  internal var preloadedCellCount:Int = 50
+  internal var pickerMode:Calendar.Component = .day
   
   // INITS
   override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout)
@@ -60,7 +58,12 @@ class DatePickerCollectionView: UICollectionView,
     layout.scrollDirection         = .horizontal
     self.collectionViewLayout      = layout
     
-    // get data
+    loadData()
+  }
+  
+  internal func loadData()
+  {
+    dateArray = []
     for i in stride(from: preloadedCellCount, through: 1, by: -1) // add previous days
     {
       dateArray.append(Calendar.current.date(byAdding: pickerMode, value: -1 * i, to: currentDate)!)
@@ -74,17 +77,6 @@ class DatePickerCollectionView: UICollectionView,
   
   private func shiftDateArray(diff:Int)
   {
-//    // get current cell data
-//    let currentCell = self.visibleCells[0]
-//    let currentIndexPath = self.indexPath(for: currentCell)
-//
-//    // set new currentDate
-//    currentDate = dateArray[(currentIndexPath?.row)!]
-//
-//    // calculated difference from middle
-//    let diff = (currentIndexPath?.row)! - dateArray.count / 2
-
-    print("date diff \(diff)")
     if diff > 0
     {
       for i in 0..<dateArray.count
@@ -131,7 +123,7 @@ class DatePickerCollectionView: UICollectionView,
     
     cell?.dateLabel.text = dateArray[indexPath.row].getString(from: pickerMode == .day ?
                                                                                       "EEEE, MMM d, yyyy" :
-                                                                                      "MMMM")
+                                                                                      "MMMM yyyy")
     
     return cell!
   }
@@ -154,18 +146,24 @@ class DatePickerCollectionView: UICollectionView,
   func scrollViewDidEndDecelerating(_ scrollView: UIScrollView)
   {
     // set new currentDate
-    //currentDate = dateArray[(currentIndexPath?.row)!]
+    currentDate = dateArray[Int(self.contentOffset.x / self.frame.width)]
     
     // calculated difference from middle
     let diff = Int(self.contentOffset.x / self.frame.width) - dateArray.count / 2
     
-    shiftAndScroll(diff:diff)
+    self.shiftAndScroll(diff:diff)
     dualScrollDelegate?.collectionViewDidEndScroll(self, withDifferenceOf: diff)
   }
   
   func scrollViewDidScroll(_ scrollView: UIScrollView)
   {
+    self.mask?.frame = self.bounds
     dualScrollDelegate?.collectionViewDidScroll(self)
+  }
+  
+  func scrollViewWillBeginDragging(_ scrollView: UIScrollView)
+  {
+    dualScrollDelegate?.collectionViewWillBeginDragging(self)
   }
   
   // INTERNAL FUNCS

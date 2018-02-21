@@ -22,9 +22,10 @@ class MainViewController: UIViewController
     let js = JSDatePickerView(frame: myFrame)
     
     self.view.addSubview(js)
-    js.translatesAutoresizingMaskIntoConstraints = false
     
-    js.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+    let safeArea = self.view.safeAreaLayoutGuide
+    js.translatesAutoresizingMaskIntoConstraints = false
+    js.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
     js.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
     js.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
     
@@ -38,5 +39,7 @@ class MainViewController: UIViewController
     myView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
     myView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
     myView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+    
+    //js.datePickerHeight = 500.0
   }
 }

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		35D2761C2A02EB441E68766D /* Pods_JSDatePickerViewTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CD351B523AD3CB9C9152C84 /* Pods_JSDatePickerViewTests.framework */; };
 		422A948A202409AC00010D2F /* Cells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422A9489202409AC00010D2F /* Cells.swift */; };
 		42315F0820220CAE00ADC50C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42315F0720220CAD00ADC50C /* AppDelegate.swift */; };
 		42315F0A20220CB600ADC50C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42315F0920220CB600ADC50C /* Main.storyboard */; };
@@ -19,8 +18,6 @@
 		42E484B72035499C007C3271 /* JSDatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E484B62035499C007C3271 /* JSDatePickerView.swift */; };
 		42E484B920354A45007C3271 /* DatePickerCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E484B820354A45007C3271 /* DatePickerCollectionView.swift */; };
 		42E484BB2035D9D8007C3271 /* CalendarCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E484BA2035D9D8007C3271 /* CalendarCollectionView.swift */; };
-		4F2BD7D6CB9AEF4F7F6CEBE2 /* Pods_JSDatePickerViewUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E810CBD6DDC76193E4F7E75 /* Pods_JSDatePickerViewUITests.framework */; };
-		C3A9EB8DCE45760BF24655AC /* Pods_JSDatePickerView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6E6570288E1EE4AA50311A7 /* Pods_JSDatePickerView.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,9 +38,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1B1010F7F103AFD34D0105AD /* Pods-JSDatePickerViewUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JSDatePickerViewUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JSDatePickerViewUITests/Pods-JSDatePickerViewUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		20D1080F26CE747AE2295024 /* Pods-JSDatePickerViewTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JSDatePickerViewTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-JSDatePickerViewTests/Pods-JSDatePickerViewTests.release.xcconfig"; sourceTree = "<group>"; };
-		33BCF8655DAA662149FF9541 /* Pods-JSDatePickerView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JSDatePickerView.release.xcconfig"; path = "Pods/Target Support Files/Pods-JSDatePickerView/Pods-JSDatePickerView.release.xcconfig"; sourceTree = "<group>"; };
 		422A94872023FFF500010D2F /* JSDatePickerViewTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JSDatePickerViewTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		422A94882023FFF500010D2F /* JSDatePickerViewUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JSDatePickerViewUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		422A9489202409AC00010D2F /* Cells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cells.swift; sourceTree = "<group>"; };
@@ -58,12 +52,6 @@
 		42E484B62035499C007C3271 /* JSDatePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSDatePickerView.swift; sourceTree = "<group>"; };
 		42E484B820354A45007C3271 /* DatePickerCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerCollectionView.swift; sourceTree = "<group>"; };
 		42E484BA2035D9D8007C3271 /* CalendarCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCollectionView.swift; sourceTree = "<group>"; };
-		487C026CD7BFAF6619107F81 /* Pods-JSDatePickerViewUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JSDatePickerViewUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-JSDatePickerViewUITests/Pods-JSDatePickerViewUITests.release.xcconfig"; sourceTree = "<group>"; };
-		5E810CBD6DDC76193E4F7E75 /* Pods_JSDatePickerViewUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JSDatePickerViewUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		907E8C1E6D3B72701661D4C0 /* Pods-JSDatePickerView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JSDatePickerView.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JSDatePickerView/Pods-JSDatePickerView.debug.xcconfig"; sourceTree = "<group>"; };
-		9CD351B523AD3CB9C9152C84 /* Pods_JSDatePickerViewTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JSDatePickerViewTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B6E6570288E1EE4AA50311A7 /* Pods_JSDatePickerView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JSDatePickerView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CDDEA2B97529C36AB66B94EB /* Pods-JSDatePickerViewTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JSDatePickerViewTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JSDatePickerViewTests/Pods-JSDatePickerViewTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,7 +59,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C3A9EB8DCE45760BF24655AC /* Pods_JSDatePickerView.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,7 +66,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				35D2761C2A02EB441E68766D /* Pods_JSDatePickerViewTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,7 +73,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F2BD7D6CB9AEF4F7F6CEBE2 /* Pods_JSDatePickerViewUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,49 +87,48 @@
 				429CE708200EC6310023292F /* JSDatePickerView.app */,
 				422A94882023FFF500010D2F /* JSDatePickerViewUITests.xctest */,
 				422A94872023FFF500010D2F /* JSDatePickerViewTests.xctest */,
-				B8C09633DA261FFD88EF7486 /* Pods */,
-				F30ACE9B9C2E14A7985502D7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		420377D11FF286390012A55C /* JSDatePickerView */ = {
 			isa = PBXGroup;
 			children = (
-				422A9489202409AC00010D2F /* Cells.swift */,
-				42315F0720220CAD00ADC50C /* AppDelegate.swift */,
-				42315F0920220CB600ADC50C /* Main.storyboard */,
-				42E484B820354A45007C3271 /* DatePickerCollectionView.swift */,
-				42C0D75E203C5415007346CE /* MainViewController.swift */,
-				42E484BA2035D9D8007C3271 /* CalendarCollectionView.swift */,
+				42C0D77C203CB3E6007346CE /* UI */,
+				42C0D77A203CB38D007346CE /* Utilities */,
+				42C0D77B203CB3BC007346CE /* CVs */,
 				42E484B62035499C007C3271 /* JSDatePickerView.swift */,
-				42973BAA1FF55D42009DEA7B /* CalenderUtilities.swift */,
 				42D92D161FFD59DE00DBD96B /* Assets.xcassets */,
 				42315F0B20220CC300ADC50C /* Info.plist */,
 			);
 			path = JSDatePickerView;
 			sourceTree = "<group>";
 		};
-		B8C09633DA261FFD88EF7486 /* Pods */ = {
+		42C0D77A203CB38D007346CE /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				907E8C1E6D3B72701661D4C0 /* Pods-JSDatePickerView.debug.xcconfig */,
-				33BCF8655DAA662149FF9541 /* Pods-JSDatePickerView.release.xcconfig */,
-				CDDEA2B97529C36AB66B94EB /* Pods-JSDatePickerViewTests.debug.xcconfig */,
-				20D1080F26CE747AE2295024 /* Pods-JSDatePickerViewTests.release.xcconfig */,
-				1B1010F7F103AFD34D0105AD /* Pods-JSDatePickerViewUITests.debug.xcconfig */,
-				487C026CD7BFAF6619107F81 /* Pods-JSDatePickerViewUITests.release.xcconfig */,
+				422A9489202409AC00010D2F /* Cells.swift */,
+				42973BAA1FF55D42009DEA7B /* CalenderUtilities.swift */,
 			);
-			name = Pods;
+			path = Utilities;
 			sourceTree = "<group>";
 		};
-		F30ACE9B9C2E14A7985502D7 /* Frameworks */ = {
+		42C0D77B203CB3BC007346CE /* CVs */ = {
 			isa = PBXGroup;
 			children = (
-				B6E6570288E1EE4AA50311A7 /* Pods_JSDatePickerView.framework */,
-				9CD351B523AD3CB9C9152C84 /* Pods_JSDatePickerViewTests.framework */,
-				5E810CBD6DDC76193E4F7E75 /* Pods_JSDatePickerViewUITests.framework */,
+				42E484B820354A45007C3271 /* DatePickerCollectionView.swift */,
+				42E484BA2035D9D8007C3271 /* CalendarCollectionView.swift */,
 			);
-			name = Frameworks;
+			path = CVs;
+			sourceTree = "<group>";
+		};
+		42C0D77C203CB3E6007346CE /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				42315F0720220CAD00ADC50C /* AppDelegate.swift */,
+				42315F0920220CB600ADC50C /* Main.storyboard */,
+				42C0D75E203C5415007346CE /* MainViewController.swift */,
+			);
+			path = UI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -154,12 +138,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 420377F71FF2863A0012A55C /* Build configuration list for PBXNativeTarget "JSDatePickerView" */;
 			buildPhases = (
-				E89D851979A800AB61F6AADB /* [CP] Check Pods Manifest.lock */,
 				420377CB1FF286390012A55C /* Sources */,
 				420377CC1FF286390012A55C /* Frameworks */,
 				420377CD1FF286390012A55C /* Resources */,
-				FAB91981D770555355EBF4F9 /* [CP] Embed Pods Frameworks */,
-				BD367D0F3F55E3745ABD2481 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -174,12 +155,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 420377FA1FF2863A0012A55C /* Build configuration list for PBXNativeTarget "JSDatePickerViewTests" */;
 			buildPhases = (
-				ACDE5FB58E494D92364A2BC5 /* [CP] Check Pods Manifest.lock */,
 				420377DF1FF2863A0012A55C /* Sources */,
 				420377E01FF2863A0012A55C /* Frameworks */,
 				420377E11FF2863A0012A55C /* Resources */,
-				D7FA58AAC731FC5394F4CEE3 /* [CP] Embed Pods Frameworks */,
-				757807B29DB5932406DF194A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -195,12 +173,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 420377FD1FF2863A0012A55C /* Build configuration list for PBXNativeTarget "JSDatePickerViewUITests" */;
 			buildPhases = (
-				17B195D389C7272984886B81 /* [CP] Check Pods Manifest.lock */,
 				420377EA1FF2863A0012A55C /* Sources */,
 				420377EB1FF2863A0012A55C /* Frameworks */,
 				420377EC1FF2863A0012A55C /* Resources */,
-				041AC524576BEC759619D766 /* [CP] Embed Pods Frameworks */,
-				0F91D75DEBBA9BC1D1ADAD6D /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -285,156 +260,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		041AC524576BEC759619D766 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JSDatePickerViewUITests/Pods-JSDatePickerViewUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		0F91D75DEBBA9BC1D1ADAD6D /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JSDatePickerViewUITests/Pods-JSDatePickerViewUITests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		17B195D389C7272984886B81 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-JSDatePickerViewUITests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		757807B29DB5932406DF194A /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JSDatePickerViewTests/Pods-JSDatePickerViewTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		ACDE5FB58E494D92364A2BC5 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-JSDatePickerViewTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		BD367D0F3F55E3745ABD2481 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JSDatePickerView/Pods-JSDatePickerView-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D7FA58AAC731FC5394F4CEE3 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JSDatePickerViewTests/Pods-JSDatePickerViewTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E89D851979A800AB61F6AADB /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-JSDatePickerView-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FAB91981D770555355EBF4F9 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-JSDatePickerView/Pods-JSDatePickerView-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/EAInfiniteScrollView/EAInfiniteScrollView.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EAInfiniteScrollView.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JSDatePickerView/Pods-JSDatePickerView-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		420377CB1FF286390012A55C /* Sources */ = {
@@ -590,7 +415,6 @@
 		};
 		420377F81FF2863A0012A55C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 907E8C1E6D3B72701661D4C0 /* Pods-JSDatePickerView.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -606,7 +430,6 @@
 		};
 		420377F91FF2863A0012A55C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 33BCF8655DAA662149FF9541 /* Pods-JSDatePickerView.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -622,7 +445,6 @@
 		};
 		420377FB1FF2863A0012A55C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CDDEA2B97529C36AB66B94EB /* Pods-JSDatePickerViewTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -640,7 +462,6 @@
 		};
 		420377FC1FF2863A0012A55C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 20D1080F26CE747AE2295024 /* Pods-JSDatePickerViewTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -658,7 +479,6 @@
 		};
 		420377FE1FF2863A0012A55C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1B1010F7F103AFD34D0105AD /* Pods-JSDatePickerViewUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -675,7 +495,6 @@
 		};
 		420377FF1FF2863A0012A55C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 487C026CD7BFAF6619107F81 /* Pods-JSDatePickerViewUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
