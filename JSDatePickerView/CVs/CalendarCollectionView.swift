@@ -14,11 +14,12 @@ class CalendarCollectionView: UICollectionView,
                               UICollectionViewDelegateFlowLayout
 {
   // PRIVATE VARS
+  private var grayCounter = 0
   private let daysPerLine:Int = 7 //This variable holds the amount of cells that are displayed per line
   private var selectedCell:CalendarViewCell? = nil
-  private var grayedCellColor:UIColor = UIColor(red: 231/255.0,
-                                                green: 232/255.0,
-                                                blue: 233/255.0,
+  private var grayedCellColor:UIColor = UIColor(red:   192/255.0,
+                                                green: 192/255.0,
+                                                blue:  192/255.0,
                                                 alpha: 1.0)
   
   // PUBLIC VARS
@@ -27,7 +28,7 @@ class CalendarCollectionView: UICollectionView,
                                                    green: 51/255.0,
                                                    blue:  51/255.0,
                                                    alpha: 1.0)
-  public var selectedCircleDistanceFromEdge:CGFloat = 0.0  //The circle's distance from the edge of the cell
+  public var selectedCircleDistanceFromEdge:CGFloat = 20.0  //The circle's distance from the edge of the cell
   public var font:UIFont = UIFont.systemFont(ofSize: 12.0) //The font of the cells
   public var dualScrollDelegate:DualCollectionViewScrollDelegate? = nil
   public var touchTransferDelegate:CollectionViewTouchTransferDelegate? = nil
@@ -36,6 +37,7 @@ class CalendarCollectionView: UICollectionView,
   // INTERNAl VARS
   internal var monthArray:[[CalendarDay]] = []
   internal var currentDate:Date = Date() //The current date of the calendar
+  internal var pickerDate:Date  = Date()
   
   // PUBLIC GET PRIVATE SET VARS
   public private(set) var cellWidth:CGFloat = 0.0 //helps the picker view set frame, dont want the user messing with this
@@ -150,6 +152,8 @@ class CalendarCollectionView: UICollectionView,
     cell?.backgroundColor = cellBackgroundColor
     cell?.dateNumberLabel.font = font
     cell?.selectedCircleColor = selectedCircleColor
+    cell?.circleDistanceFromEdge = self.selectedCircleDistanceFromEdge
+    cell?.layer.mask = nil
     
     // set the label
     if monthArray[indexPath.section][indexPath.row].day == nil // if the cell is a day cell and not a date cell
@@ -180,9 +184,47 @@ class CalendarCollectionView: UICollectionView,
     }
     
     // if the calendar data is not from this month, it should be grayed out slightly
-    if monthArray[indexPath.section][indexPath.row].grayed
+    switch monthArray[indexPath.section][indexPath.row].gray
     {
-      cell?.backgroundColor = grayedCellColor
+      case .previousMonth(let grayNum, let isLast):
+        cell?.backgroundColor = grayedCellColor.withAlphaComponent(CGFloat(grayNum) * 0.15)
+        if isLast
+        {
+          let rectShape = CAShapeLayer()
+          rectShape.bounds = (cell?.frame)!
+          rectShape.position = (cell?.center)!
+          rectShape.path = UIBezierPath(roundedRect: (cell?.bounds)!,
+                                        byRoundingCorners: [.topRight,.bottomRight],
+                                        cornerRadii: CGSize(width: 20, height: 20)).cgPath
+          cell?.layer.mask = rectShape
+        }
+      case .nextMonth(let grayNum, let isFirst):
+        cell?.backgroundColor = grayedCellColor.withAlphaComponent(1-CGFloat(grayNum)*0.15)
+        if isFirst
+        {
+          let rectShape = CAShapeLayer()
+          rectShape.bounds = (cell?.frame)!
+          rectShape.position = (cell?.center)!
+          rectShape.path = UIBezierPath(roundedRect: (cell?.bounds)!,
+                                        byRoundingCorners: [.topLeft,.bottomLeft],
+                                        cornerRadii: CGSize(width: 20, height: 20)).cgPath
+          cell?.layer.mask = rectShape
+        }
+      case .none:
+        break
+    }
+    
+    // set the selected layer
+    if let currDate = monthArray[indexPath.section][indexPath.row].date
+    {
+      let components = Calendar.current.dateComponents([.day,.month,.year], from: pickerDate)
+      let currentComponents = Calendar.current.dateComponents([.day,.month,.year], from: currDate)
+      
+      if components == currentComponents
+      {
+        cell?.addCircle(layer: (cell?.selectedCircleLayer)!)
+        self.selectedCell = cell
+      }
     }
     
     return cell!
@@ -229,19 +271,33 @@ class CalendarCollectionView: UICollectionView,
   
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
   {
-    touchTransferDelegate?.collectionView(collectionView, didSelectItemAt: indexPath)
+    if let newDate = monthArray[indexPath.section][indexPath.row].date
+    {
+      if newDate.getMonth() == currentDate.getMonth()
+      {
+        self.selectedCell?.deleteCircle(layer: (selectedCell?.selectedCircleLayer)!)
+        
+        let cell = collectionView.cellForItem(at: indexPath) as? CalendarViewCell
+        cell?.addCircle(layer: (cell?.selectedCircleLayer)!)
+        self.selectedCell = cell
+        
+        self.pickerDate = newDate
+        
+        touchTransferDelegate?.collectionView(collectionView, didSelectItemAt: indexPath)
+      }
+    }
   }
   
   // UIScrollViewDelegate
   func scrollViewDidEndDecelerating(_ scrollView: UIScrollView)
   {
-    currentDate = monthArray[Int(self.contentOffset.x / self.frame.width)][16].date!
-    
     // calculated difference from middle
     let diff = Int(self.contentOffset.x / self.frame.width) - monthArray.count / 2
     
     self.shiftAndScroll(diff:diff)
     dualScrollDelegate?.collectionViewDidEndScroll(self, withDifferenceOf: diff)
+    
+    currentDate = monthArray[Int(self.contentOffset.x / self.frame.width)][16].date!
   }
   
   func scrollViewDidScroll(_ scrollView: UIScrollView)

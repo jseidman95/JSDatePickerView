@@ -153,8 +153,15 @@ internal struct CalendarDay
   public var dayNumber : Int?
   public var year      : Int?
   public var labelText : String?
-  public var grayed    : Bool
+  public var gray      : GrayType
   public var date      : Date?
+}
+
+internal enum GrayType
+{
+  case previousMonth(Int,Bool)
+  case nextMonth(Int,Bool)
+  case none
 }
 
 internal class CalendarUtil:NSObject
@@ -169,11 +176,12 @@ internal class CalendarUtil:NSObject
                                                     dayNumber: nil,
                                                     year: nil,
                                                     labelText: DayEnum(rawValue: i)?.description,
-                                                    grayed:false,
+                                                    gray:.none,
                                                     date: nil))}
 
       //get date components from given date
       let components = Calendar.current.dateComponents([.month,.day,.year], from: date)
+      var grayCount = 1;
     
       //get first day of the month date
       var currDate = getFirstOfMonth(components)
@@ -196,8 +204,14 @@ internal class CalendarUtil:NSObject
                                        dayNumber: components.day,
                                        year: components.year,
                                        labelText: nil,
-                                       grayed: components.month != Calendar.current.dateComponents([.month], from: date).month,
+                                       gray: components.month != Calendar.current.dateComponents([.month], from: date).month ?
+                                                                                                .previousMonth(grayCount,currDate == getLastOfMonth(components)) :
+                                                                                                .none,
                                        date: currDate))
+        
+          // increment gray count
+          if components.month != Calendar.current.dateComponents([.month], from: date).month { grayCount += 1}
+          else { grayCount = 1 }
         
           //increment
           if let nextDate = Calendar.current.date(byAdding: .day, value: 1, to: currDate)
@@ -219,8 +233,11 @@ internal class CalendarUtil:NSObject
                                        dayNumber: components.day,
                                        year: components.year,
                                        labelText: nil,
-                                       grayed:true,
+                                       gray:.nextMonth(grayCount,currDate == getFirstOfMonth(components)),
                                        date: currDate))
+        
+          // increment gray count
+          grayCount += 1
         
           //increment
           if let nextDate = Calendar.current.date(byAdding: .day, value: 1, to: currDate)
