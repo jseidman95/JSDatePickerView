@@ -87,7 +87,7 @@ public class JSDatePickerView: UIView
     super.layoutSubviews()
     
     makeConstraints()
-    
+
     if deviceOrientation != UIDevice.current.orientation {
       self.reloadAllData()
       deviceOrientation = UIDevice.current.orientation
@@ -235,29 +235,54 @@ extension JSDatePickerView
       // make sure constraints stick to datepickerCV
       datePickerCV.translatesAutoresizingMaskIntoConstraints = false
       
-      // add constraints to datepickerCV
-      datePickerCV.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-      datePickerCV.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1.0, constant: ((self.frame.width / 7).rounded() * 7) - self.frame.width).isActive = true
-      datePickerCV.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-      dateConstraint = datePickerCV.heightAnchor.constraint(equalToConstant: self.datePickerHeight)
-      dateConstraint.isActive = true
-      
       // make sure constraints stick to calendarCV
       calendarCV.translatesAutoresizingMaskIntoConstraints = false
       
-      // add constraints to calendarCV
-      calendarCV.topAnchor.constraint(equalTo: datePickerCV.bottomAnchor).isActive = true
-      calendarCV.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive      = true
-      calendarCV.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1.0, constant: ((self.frame.width / 7).rounded() * 7) - self.frame.width).isActive = true
-      calendarCV.centerXAnchor.constraint(equalTo: datePickerCV.centerXAnchor).isActive   = true
-      calConstraint = calendarCV.heightAnchor.constraint(equalToConstant: 0.0)
-      calConstraint.isActive = true
+      if #available(iOS 11.0, *)
+      {
+        let safeGuide = self.safeAreaLayoutGuide
+      
+        datePickerCV.topAnchor.constraint(equalTo: safeGuide.topAnchor).isActive = true
+        datePickerCV.leftAnchor.constraint(equalTo: safeGuide.leftAnchor).isActive = true
+        datePickerCV.rightAnchor.constraint(equalTo: safeGuide.rightAnchor).isActive = true
+
+        datePickerCV.centerXAnchor.constraint(equalTo: safeGuide.centerXAnchor).isActive = true
+        dateConstraint = datePickerCV.heightAnchor.constraint(equalToConstant: self.datePickerHeight)
+        dateConstraint.isActive = true
+      
+        // add constraints to calendarCV
+        calendarCV.topAnchor.constraint(equalTo: datePickerCV.bottomAnchor).isActive = true
+        calendarCV.bottomAnchor.constraint(equalTo: safeGuide.bottomAnchor).isActive      = true
+        calendarCV.leftAnchor.constraint(equalTo: safeGuide.leftAnchor).isActive = true
+        calendarCV.rightAnchor.constraint(equalTo: safeGuide.rightAnchor).isActive = true
+        calendarCV.centerXAnchor.constraint(equalTo: datePickerCV.centerXAnchor).isActive   = true
+        calConstraint = calendarCV.heightAnchor.constraint(equalToConstant: 0.0)
+        calConstraint.isActive = true
+      }
+      else
+      {
+        // add constraints to datepickerCV
+        datePickerCV.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        datePickerCV.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1.0, constant: ((self.frame.width / 7).rounded() * 7) - self.frame.width).isActive = true
+        datePickerCV.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        dateConstraint = datePickerCV.heightAnchor.constraint(equalToConstant: self.datePickerHeight)
+        dateConstraint.isActive = true
+        
+        // add constraints to calendarCV
+        calendarCV.topAnchor.constraint(equalTo: datePickerCV.bottomAnchor).isActive = true
+        calendarCV.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive      = true
+        calendarCV.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1.0, constant: ((self.frame.width / 7).rounded() * 7) - self.frame.width).isActive = true
+        calendarCV.centerXAnchor.constraint(equalTo: datePickerCV.centerXAnchor).isActive   = true
+        calConstraint = calendarCV.heightAnchor.constraint(equalToConstant: 0.0)
+        calConstraint.isActive = true
+      }
     }
-    
   }
+  
   // Reload data for both collectionViews and re-center
   private func reloadAllData()
   {
+    self.calendarCV.layoutIfNeeded()
     self.calendarCV.reloadData()
     self.datePickerCV.reloadData()
     self.scrollToMiddle()
