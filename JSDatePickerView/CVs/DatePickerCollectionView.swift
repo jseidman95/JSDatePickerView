@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DatePickerCollectionView: UICollectionView,
+public class DatePickerCollectionView: UICollectionView,
                                 UICollectionViewDelegate,
                                 UICollectionViewDataSource,
                                 UICollectionViewDelegateFlowLayout
@@ -29,7 +29,7 @@ class DatePickerCollectionView: UICollectionView,
     self.startUp()
   }
   
-  required init?(coder aDecoder: NSCoder)
+  public required init?(coder aDecoder: NSCoder)
   {
     super.init(coder: aDecoder)
     
@@ -57,8 +57,6 @@ class DatePickerCollectionView: UICollectionView,
     layout.minimumLineSpacing      = 0.0
     layout.scrollDirection         = .horizontal
     self.collectionViewLayout      = layout
-    
-    loadData()
   }
   
   internal func loadData()
@@ -110,13 +108,13 @@ class DatePickerCollectionView: UICollectionView,
   }
   
   // UICollectionViewDataSource
-  func collectionView(_ collectionView: UICollectionView,
+  public func collectionView(_ collectionView: UICollectionView,
                       numberOfItemsInSection section: Int) -> Int
   {
     return dateArray.count
   }
   
-  func collectionView(_ collectionView: UICollectionView,
+  public func collectionView(_ collectionView: UICollectionView,
                       cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
   {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "dateCell", for: indexPath) as? DateCell
@@ -129,7 +127,7 @@ class DatePickerCollectionView: UICollectionView,
   }
   
   // UICollectionViewDelegateFlowLayout
-  func collectionView(_ collectionView: UICollectionView,
+  public func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
                       sizeForItemAt indexPath: IndexPath) -> CGSize
   {
@@ -137,31 +135,33 @@ class DatePickerCollectionView: UICollectionView,
   }
   
   // UICollectionViewDelegate
-  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
+  public func collectionView(_ collectionView: UICollectionView,
+                             didSelectItemAt indexPath: IndexPath)
   {
     touchTransferDelegate?.collectionView(collectionView, didSelectItemAt: indexPath)
   }
   
   // UIScrollViewDelegate
-  func scrollViewDidEndDecelerating(_ scrollView: UIScrollView)
+  public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView)
   {
     // set new currentDate
     currentDate = dateArray[Int(self.contentOffset.x / self.frame.width)]
-    
+
     // calculated difference from middle
     let diff = Int(self.contentOffset.x / self.frame.width) - dateArray.count / 2
     
-    self.shiftAndScroll(diff:diff)
+    self.shiftAndScroll(diff: diff)
+    
     dualScrollDelegate?.collectionViewDidEndScroll(self, withDifferenceOf: diff)
   }
   
-  func scrollViewDidScroll(_ scrollView: UIScrollView)
+  public func scrollViewDidScroll(_ scrollView: UIScrollView)
   {
     self.mask?.frame = self.bounds
     dualScrollDelegate?.collectionViewDidScroll(self)
   }
   
-  func scrollViewWillBeginDragging(_ scrollView: UIScrollView)
+  public func scrollViewWillBeginDragging(_ scrollView: UIScrollView)
   {
     dualScrollDelegate?.collectionViewWillBeginDragging(self)
   }

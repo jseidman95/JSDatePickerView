@@ -8,14 +8,14 @@
 
 import UIKit
 
-internal protocol DualCollectionViewScrollDelegate
+public protocol DualCollectionViewScrollDelegate
 {
   func collectionViewDidScroll(_ collectionView:UICollectionView)
   func collectionViewDidEndScroll(_ collectionView:UICollectionView, withDifferenceOf diff:Int)
   func collectionViewWillBeginDragging(_ collectionView:UICollectionView)
 }
 
-internal protocol CollectionViewTouchTransferDelegate
+public protocol CollectionViewTouchTransferDelegate
 {
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
 }

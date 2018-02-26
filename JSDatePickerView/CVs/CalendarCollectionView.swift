@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CalendarCollectionView: UICollectionView,
+public class CalendarCollectionView: UICollectionView,
                               UICollectionViewDelegate,
                               UICollectionViewDataSource,
                               UICollectionViewDelegateFlowLayout
@@ -50,7 +50,7 @@ class CalendarCollectionView: UICollectionView,
     self.startUp()
   }
   
-  required init?(coder aDecoder: NSCoder)
+  required public init?(coder aDecoder: NSCoder)
   {
     super.init(coder: aDecoder)
     
@@ -131,18 +131,18 @@ class CalendarCollectionView: UICollectionView,
   }
   
   // UICollectionViewDataSource
-  func collectionView(_ collectionView: UICollectionView,
+  public func collectionView(_ collectionView: UICollectionView,
                       numberOfItemsInSection section: Int) -> Int
   {
     return monthArray[section].count
   }
   
-  func numberOfSections(in collectionView: UICollectionView) -> Int
+  public func numberOfSections(in collectionView: UICollectionView) -> Int
   {
     return monthArray.count
   }
   
-  func collectionView(_ collectionView: UICollectionView,
+  public func collectionView(_ collectionView: UICollectionView,
                       cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
   {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "calendarCell", for: indexPath) as? CalendarViewCell
@@ -187,7 +187,7 @@ class CalendarCollectionView: UICollectionView,
     switch monthArray[indexPath.section][indexPath.row].gray
     {
       case .previousMonth(let grayNum, let isLast):
-        cell?.backgroundColor = grayedCellColor.withAlphaComponent(CGFloat(grayNum) * 0.15)
+        cell?.backgroundColor = grayedCellColor.withAlphaComponent(1-(CGFloat(grayNum) * 0.15))
         if isLast
         {
           let rectShape = CAShapeLayer()
@@ -195,11 +195,11 @@ class CalendarCollectionView: UICollectionView,
           rectShape.position = (cell?.center)!
           rectShape.path = UIBezierPath(roundedRect: (cell?.bounds)!,
                                         byRoundingCorners: [.topRight,.bottomRight],
-                                        cornerRadii: CGSize(width: 20, height: 20)).cgPath
+                                        cornerRadii: CGSize(width: 15, height: 15)).cgPath
           cell?.layer.mask = rectShape
         }
       case .nextMonth(let grayNum, let isFirst):
-        cell?.backgroundColor = grayedCellColor.withAlphaComponent(1-CGFloat(grayNum)*0.15)
+        cell?.backgroundColor = grayedCellColor.withAlphaComponent(CGFloat(grayNum)*0.15 + 0.15)
         if isFirst
         {
           let rectShape = CAShapeLayer()
@@ -207,7 +207,7 @@ class CalendarCollectionView: UICollectionView,
           rectShape.position = (cell?.center)!
           rectShape.path = UIBezierPath(roundedRect: (cell?.bounds)!,
                                         byRoundingCorners: [.topLeft,.bottomLeft],
-                                        cornerRadii: CGSize(width: 20, height: 20)).cgPath
+                                        cornerRadii: CGSize(width: 15, height: 15)).cgPath
           cell?.layer.mask = rectShape
         }
       case .none:
@@ -269,7 +269,7 @@ class CalendarCollectionView: UICollectionView,
     }
   }
   
-  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
+  public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
   {
     if let newDate = monthArray[indexPath.section][indexPath.row].date
     {
@@ -289,7 +289,7 @@ class CalendarCollectionView: UICollectionView,
   }
   
   // UIScrollViewDelegate
-  func scrollViewDidEndDecelerating(_ scrollView: UIScrollView)
+  public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView)
   {
     // calculated difference from middle
     let diff = Int(self.contentOffset.x / self.frame.width) - monthArray.count / 2
@@ -300,12 +300,12 @@ class CalendarCollectionView: UICollectionView,
     currentDate = monthArray[Int(self.contentOffset.x / self.frame.width)][16].date!
   }
   
-  func scrollViewDidScroll(_ scrollView: UIScrollView)
+  public func scrollViewDidScroll(_ scrollView: UIScrollView)
   {
     dualScrollDelegate?.collectionViewDidScroll(self)
   }
   
-  func scrollViewWillBeginDragging(_ scrollView: UIScrollView)
+  public func scrollViewWillBeginDragging(_ scrollView: UIScrollView)
   {
     dualScrollDelegate?.collectionViewWillBeginDragging(self)
   }

@@ -8,8 +8,18 @@
 
 import UIKit
 
-class MainViewController: UIViewController
+class MainViewController: UIViewController, JSDatePickerDelegate
 {
+  func jsDatePicker(_ jsDatePicker: JSDatePickerView,
+                    didChangeDateFrom collectionView: UICollectionView)
+  {
+    print("new date", jsDatePicker.currentDate)
+    if collectionView is CalendarCollectionView
+    {
+      //jsDatePicker.collapseCalendar()
+    }
+  }
+  
   override func viewDidLoad()
   {
     super.viewDidLoad()
@@ -20,7 +30,7 @@ class MainViewController: UIViewController
                          width: self.view.frame.width,
                          height: 150.0)
     let js = JSDatePickerView(frame: myFrame)
-    
+    js.pickerDelegate = self
     self.view.addSubview(js)
     
     let safeArea = self.view.safeAreaLayoutGuide
@@ -42,4 +52,6 @@ class MainViewController: UIViewController
     
     //js.datePickerHeight = 500.0
   }
+
+  
 }
