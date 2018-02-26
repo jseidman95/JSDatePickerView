@@ -87,6 +87,11 @@ internal class CalendarViewCell:UICollectionViewCell
     self.selectedCircleLayer = makeCircle(color: color)
   }
   
+  internal func setSelectedCircle()
+  {
+    self.selectedCircleLayer = makeCircle(color: self.selectedCircleColor)
+  }
+  
   //this function makes the date number label that is in the center of the cell
   private func makeLabel()
   {
@@ -108,7 +113,7 @@ internal class CalendarViewCell:UICollectionViewCell
   {
     // make circle path
     let circlePath = UIBezierPath(arcCenter: CGPoint(x: self.frame.width/2,y: self.frame.height/2),
-                                  radius: (self.frame.width - circleDistanceFromEdge) / 2,
+                                  radius: (self.frame.height - circleDistanceFromEdge) / 2,
                                   startAngle: CGFloat(0),
                                   endAngle:CGFloat(Double.pi * 2),
                                   clockwise: true)

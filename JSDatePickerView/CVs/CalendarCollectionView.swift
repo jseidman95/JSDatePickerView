@@ -28,7 +28,7 @@ public class CalendarCollectionView: UICollectionView,
                                                    green: 51/255.0,
                                                    blue:  51/255.0,
                                                    alpha: 1.0)
-  public var selectedCircleDistanceFromEdge:CGFloat = 20.0  //The circle's distance from the edge of the cell
+  public var selectedCircleDistanceFromEdge:CGFloat = 10.0  //The circle's distance from the edge of the cell
   public var font:UIFont = UIFont.systemFont(ofSize: 12.0) //The font of the cells
   public var dualScrollDelegate:DualCollectionViewScrollDelegate? = nil
   public var touchTransferDelegate:CollectionViewTouchTransferDelegate? = nil
@@ -222,6 +222,7 @@ public class CalendarCollectionView: UICollectionView,
       
       if components == currentComponents
       {
+        cell?.setSelectedCircle()
         cell?.addCircle(layer: (cell?.selectedCircleLayer)!)
         self.selectedCell = cell
       }
@@ -236,7 +237,7 @@ public class CalendarCollectionView: UICollectionView,
                              sizeForItemAt indexPath: IndexPath) -> CGSize
   {
     var cellSize = CGSize()
-   
+
     // get flow layout
     let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout
     
@@ -278,6 +279,7 @@ public class CalendarCollectionView: UICollectionView,
         self.selectedCell?.deleteCircle(layer: (selectedCell?.selectedCircleLayer)!)
         
         let cell = collectionView.cellForItem(at: indexPath) as? CalendarViewCell
+        cell?.setSelectedCircle()
         cell?.addCircle(layer: (cell?.selectedCircleLayer)!)
         self.selectedCell = cell
         
