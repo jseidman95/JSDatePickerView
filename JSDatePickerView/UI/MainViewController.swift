@@ -15,7 +15,6 @@ class MainViewController: UIViewController, JSDatePickerDelegate
   func jsDatePicker(_ jsDatePicker: JSDatePickerView,
                     didChangeDateFrom collectionView: UICollectionView)
   {
-    print("new date", jsDatePicker.currentDate)
     if collectionView is CalendarCollectionView
     {
       jsDatePicker.collapseCalendar()
@@ -35,11 +34,18 @@ class MainViewController: UIViewController, JSDatePickerDelegate
     js?.pickerDelegate = self
     self.view.addSubview(js!)
     
-    let safeArea = self.view.safeAreaLayoutGuide
-    js?.translatesAutoresizingMaskIntoConstraints = false
-    js?.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
-    js?.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
-    js?.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
+    if #available(iOS 11.0, *) {
+      let safeArea = self.view.safeAreaLayoutGuide
+      js?.translatesAutoresizingMaskIntoConstraints = false
+      js?.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
+      js?.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
+      js?.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
+    } else {
+      // Fallback on earlier versions
+      
+      // TODO
+    }
+    
     
     let myView = UIView(frame: self.view.frame)
     myView.backgroundColor = UIColor.red
