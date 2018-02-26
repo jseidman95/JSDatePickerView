@@ -5,7 +5,6 @@
 //  Created by Jesse Seidman on 2/14/18.
 //  Copyright © 2018 Jesse Seidman. All rights reserved.
 //
-
 import UIKit
 
 public protocol JSDatePickerDelegate
@@ -13,16 +12,13 @@ public protocol JSDatePickerDelegate
   func jsDatePicker(_ jsDatePicker:JSDatePickerView, didChangeDateFrom collectionView:UICollectionView)
 }
 
-public class JSDatePickerView: UIView,
-                        DualCollectionViewScrollDelegate,
-                        CollectionViewTouchTransferDelegate
+public class JSDatePickerView: UIView
 {
   // PRIVATE VARS
   // Bools
   private var datePickerIsScrolling  = false
   private var didSetConstraints      = false
   private var isCalendarExpanded     = false
-  private var isFirstTimeExpanding   = true  // for special presentation on the first time
   private var widthGreaterThanHeight = true
   
   // CollectionViews
@@ -32,9 +28,9 @@ public class JSDatePickerView: UIView,
   // NSLayoutConstraints
   private var dateConstraint = NSLayoutConstraint()
   private var calConstraint  = NSLayoutConstraint()
-
-  // to observe device orientation change
-  private var currentOrientation:UIDeviceOrientation = .unknown
+  
+  // Orientation tracker
+  private var deviceOrientation: UIDeviceOrientation = .unknown
   
   // to keep track of changes for closed calendar
   private var changeLog = 0
@@ -86,26 +82,117 @@ public class JSDatePickerView: UIView,
     
   }
   
-  // PRIVATE FUNCS
+  override public func layoutSubviews()
+  {
+    super.layoutSubviews()
+    
+    makeConstraints()
+    
+    if deviceOrientation != UIDevice.current.orientation {
+      self.reloadAllData()
+      deviceOrientation = UIDevice.current.orientation
+    }
+  }
+}
+
+extension JSDatePickerView
+{
+  /** Public **/
+  public func expandCalendar()   { _expandCalendar() }
+  public func collapseCalendar() { _collapseCalendar() }
+  
+}
+
+extension JSDatePickerView
+{
+  /** Private **/
+  
+  private func scrollToMiddle()
+  {
+    // scroll to middle of just the date picker (because it is the only thing open)
+    datePickerCV.scrollToItem(at: IndexPath(row: datePickerCV.dateArray.count / 2, section: 0),
+                              at: .centeredHorizontally,
+                              animated: false)
+  }
+  
+  private func _expandCalendar()
+  {
+    
+    // set calendar bool and height constraint
+    isCalendarExpanded = true
+    self.calConstraint.constant = self.calendarHeight
+    
+    self.calendarCV.setContentOffset(CGPoint(x: self.calendarCV.frame.width * CGFloat(self.calendarCV.monthArray.count/2), y: 0), animated: false)
+    
+    // set the date picker mode to month and load the correct data
+    datePickerCV.currentDate = self.currentDate
+    datePickerCV.pickerMode = .month
+    datePickerCV.loadData()
+    
+    // pass the current date into the calendar
+    calendarCV.pickerDate = datePickerCV.currentDate
+    
+    // reload all the cells so proper data gets shown
+    self.datePickerCV.performBatchUpdates({
+      self.datePickerCV.reloadSections(NSIndexSet(index: 0) as IndexSet)
+    }, completion: nil)
+    
+    
+    // animate the presentation of the calendar
+    UIView.animate(withDuration: 0.45,
+                   delay: 0.0,
+                   options: .curveEaseOut,
+                   animations: {
+                    self.calendarCV.layoutIfNeeded()
+                    self.superview?.layoutIfNeeded()
+                    
+                    // shift and scroll to the correct location
+                    self.calendarCV.shiftAndScroll(diff: self.changeLog)
+    },
+                   completion: { _ in
+                    // reset the change log
+                    self.changeLog = 0
+                    self.reloadAllData()
+    })
+  }
+  
+  private func _collapseCalendar()
+  {
+    // change the calendar bool and shrink the calendar
+    isCalendarExpanded = false
+    self.calConstraint.constant = 0.0
+    
+    // change the picker mode back to day and load the correct data
+    datePickerCV.pickerMode  = .day
+    datePickerCV.currentDate = calendarCV.pickerDate
+    datePickerCV.loadData()
+    
+    // make sure all cells get updated in picker view
+    self.datePickerCV.performBatchUpdates({
+      self.datePickerCV.reloadSections(NSIndexSet(index: 0) as IndexSet)
+    }, completion: nil)
+    
+    // animate shrinking of calendar
+    UIView.animate(withDuration: 0.45,
+                   delay: 0.0,
+                   options: .curveEaseOut,
+                   animations: {
+                    self.calendarCV.layoutIfNeeded()
+                    self.superview?.layoutIfNeeded()
+    },
+                   completion: { _ in
+                    self.reloadAllData()
+    })
+  }
+  
   private func startUp()
   {
-    UIDevice.current.beginGeneratingDeviceOrientationNotifications()
-    NotificationCenter.default.addObserver(self,
-                                           selector: #selector(didRotate),
-                                           name: Notification.Name.UIDeviceOrientationDidChange,
-                                           object: nil)
-    currentOrientation = UIDevice.current.orientation
     
     makeDatePickerCV()
     makeCalendarCV()
-
+    
     // set data for self
     self.backgroundColor = UIColor.clear
-  }
-  
-  deinit
-  {
-    NotificationCenter.default.removeObserver(self)
   }
   
   private func makeDatePickerCV()
@@ -121,7 +208,7 @@ public class JSDatePickerView: UIView,
     // set delegates
     datePickerCV.dualScrollDelegate    = self
     datePickerCV.touchTransferDelegate = self
-   
+    
     // add CV to frame
     self.addSubview(datePickerCV)
   }
@@ -132,7 +219,7 @@ public class JSDatePickerView: UIView,
     calendarCV = CalendarCollectionView(frame: self.frame, collectionViewLayout: UICollectionViewFlowLayout())
     
     // set delegates
-    calendarCV.dualScrollDelegate      = self
+    calendarCV.dualScrollDelegate    = self
     calendarCV.touchTransferDelegate = self
     
     // add CV to frame
@@ -166,31 +253,19 @@ public class JSDatePickerView: UIView,
       calConstraint = calendarCV.heightAnchor.constraint(equalToConstant: 0.0)
       calConstraint.isActive = true
     }
-  }
-  
-  override public func layoutSubviews()
-  {
-    super.layoutSubviews()
     
-    makeConstraints()
-    
-//    // do this to make sure size of cells is correct
-//    let layout = datePickerCV.collectionViewLayout as! UICollectionViewFlowLayout
-//    layout.invalidateLayout()
-//    layout.prepare()
-//
-//    let layout2 = calendarCV.collectionViewLayout as! UICollectionViewFlowLayout
-//    layout2.invalidateLayout()
-//    layout2.prepare()
   }
-  
-  private func scrollToMiddle()
+  // Reload data for both collectionViews and re-center
+  private func reloadAllData()
   {
-    // scroll to middle of just the date picker (because it is the only thing open)
-    datePickerCV.scrollToItem(at: IndexPath(row: datePickerCV.dateArray.count / 2, section: 0),
-                              at: .centeredHorizontally,
-                              animated: false)
+    self.calendarCV.reloadData()
+    self.datePickerCV.reloadData()
+    self.scrollToMiddle()
   }
+}
+extension JSDatePickerView: DualCollectionViewScrollDelegate
+{
+  /** DualCollectionViewScrollDelegate **/
   
   // DualCollectionViewScrollDelegate
   public func collectionViewDidScroll(_ collectionView: UICollectionView)
@@ -214,7 +289,7 @@ public class JSDatePickerView: UIView,
   }
   
   public func collectionViewDidEndScroll(_ collectionView: UICollectionView,
-                                  withDifferenceOf diff: Int)
+                                         withDifferenceOf diff: Int)
   {
     // if calendar is ending scroll
     if collectionView is CalendarCollectionView
@@ -223,7 +298,7 @@ public class JSDatePickerView: UIView,
       changeLog +=  -diff
       datePickerCV.shiftAndScroll(diff:diff)
     }
-    // if the date picker is ending scroll
+      // if the date picker is ending scroll
     else if collectionView is DatePickerCollectionView
     {
       if !isCalendarExpanded
@@ -231,9 +306,9 @@ public class JSDatePickerView: UIView,
         self.currentDate = datePickerCV.currentDate
         pickerDelegate?.jsDatePicker(self, didChangeDateFrom: datePickerCV)
       }
-
+      
       if (datePickerCV.pickerMode == .day && datePickerCV.currentDate.getMonth() != calendarCV.currentDate.getMonth() + changeLog) ||
-          datePickerCV.pickerMode == .month
+        datePickerCV.pickerMode == .month
       {
         // if the calendar isnt expanded, we need to keep track of the changes to scroll to the right location when it opens
         if !isCalendarExpanded
@@ -266,9 +341,15 @@ public class JSDatePickerView: UIView,
     }
   }
   
+}
+
+extension JSDatePickerView: CollectionViewTouchTransferDelegate
+{
+/** CollectionViewTouchTransferDelegate **/
+  
   // CollectionViewTouchTransferDelegate
   public func collectionView(_ collectionView: UICollectionView,
-                      didSelectItemAt indexPath: IndexPath)
+                             didSelectItemAt indexPath: IndexPath)
   {
     // if the calendar is being expanded
     if collectionView is DatePickerCollectionView
@@ -276,11 +357,11 @@ public class JSDatePickerView: UIView,
       // if the calendar should be expanded
       if !isCalendarExpanded
       {
-        expandCalendar()
+        _expandCalendar()
       }
       else
       {
-        collapseCalendar()
+        _collapseCalendar()
       }
     }
     else if collectionView is CalendarCollectionView
@@ -290,89 +371,4 @@ public class JSDatePickerView: UIView,
       pickerDelegate?.jsDatePicker(self, didChangeDateFrom: self.calendarCV)
     }
   }
-  
-  public func expandCalendar()
-  {
-    // set calendar bool and height constraint
-    isCalendarExpanded = true
-    self.calConstraint.constant = self.calendarHeight
-    
-    // if the calendar is being presented for the first time, it should be scrolled to the middle location
-    if isFirstTimeExpanding
-    {
-      isFirstTimeExpanding = false
-      self.calendarCV.setContentOffset(CGPoint(x: self.calendarCV.frame.width * CGFloat(self.calendarCV.monthArray.count/2),
-                                               y: 0),
-                                       animated: false)
-    }
-    
-    // set the date picker mode to month and load the correct data
-    datePickerCV.currentDate = self.currentDate
-    datePickerCV.pickerMode = .month
-    datePickerCV.loadData()
-    
-    // pass the current date into the calendar
-    calendarCV.pickerDate = datePickerCV.currentDate
-    
-    // reload all the cells so proper data gets shown
-    self.datePickerCV.performBatchUpdates({
-      self.datePickerCV.reloadSections(NSIndexSet(index: 0) as IndexSet)
-    }, completion: nil)
-    
-    // animate the presentation of the calendar
-    UIView.animate(withDuration: 0.45,
-                   delay: 0.0,
-                   options: .curveEaseOut,
-                   animations: {
-                    self.calendarCV.layoutIfNeeded()
-                    self.superview?.layoutIfNeeded()
-                    self.calendarCV.reloadData()
-                    
-                    // shift and scroll to the correct location
-                    if !self.isFirstTimeExpanding { self.calendarCV.shiftAndScroll(diff: self.changeLog) }
-                   },
-                   completion: {_ in
-                    // reset the change log
-                    self.changeLog = 0
-                    self.scrollToMiddle()
-                   })
-  }
-  
-  public func collapseCalendar()
-  {
-    // change the calendar bool and shrink the calendar
-    isCalendarExpanded = false
-    self.calConstraint.constant = 0.0
-    
-    // change the picker mode back to day and load the correct data
-    datePickerCV.pickerMode  = .day
-    datePickerCV.currentDate = calendarCV.pickerDate
-    datePickerCV.loadData()
-    
-    // make sure all cells get updated in picker view
-    self.datePickerCV.performBatchUpdates({
-      self.datePickerCV.reloadSections(NSIndexSet(index: 0) as IndexSet)
-    }, completion: nil)
-    
-    // animate shrinking of calendar
-    UIView.animate(withDuration: 0.45,
-                   delay: 0.0,
-                   options: .curveEaseOut,
-                   animations: {
-                    self.calendarCV.layoutIfNeeded()
-                    self.superview?.layoutIfNeeded()
-                   },
-                   completion: { _ in
-                    self.scrollToMiddle()
-                   })
-  }
-  
-  @objc private func didRotate()
-  {
-    datePickerCV.reloadData()
-    calendarCV.reloadData()
-    self.calendarCV.layoutIfNeeded()
-    self.scrollToMiddle()
-  }
 }
-
