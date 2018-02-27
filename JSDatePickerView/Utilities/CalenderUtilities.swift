@@ -157,11 +157,28 @@ internal struct CalendarDay
   public var date      : Date?
 }
 
-internal enum GrayType
+internal enum GrayType:Equatable
 {
   case previousMonth(Int,Bool)
   case nextMonth(Int,Bool)
   case none
+  
+  static func ==(lhs: GrayType, rhs: GrayType) -> Bool
+  {
+    switch (lhs, rhs)
+    {
+      case (let .previousMonth(monthNum, isPrevious), let .previousMonth(monthNum2, isPrevious2)):
+        return monthNum == monthNum2 && isPrevious == isPrevious2
+      
+      case (let .nextMonth(monthNum, isPrevious), let .nextMonth(monthNum2, isPrevious2)):
+        return monthNum == monthNum2 && isPrevious == isPrevious2
+      
+      case (.none, .none):
+        return true
+      default:
+        return false
+    }
+  }
 }
 
 internal class CalendarUtil:NSObject

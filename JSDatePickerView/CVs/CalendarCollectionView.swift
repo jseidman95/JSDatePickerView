@@ -220,7 +220,7 @@ public class CalendarCollectionView: UICollectionView,
       let components = Calendar.current.dateComponents([.day,.month,.year], from: pickerDate)
       let currentComponents = Calendar.current.dateComponents([.day,.month,.year], from: currDate)
       
-      if components == currentComponents
+      if components == currentComponents && monthArray[indexPath.section][indexPath.row].gray == GrayType.none
       {
         cell?.setSelectedCircle()
         cell?.addCircle(layer: (cell?.selectedCircleLayer)!)
