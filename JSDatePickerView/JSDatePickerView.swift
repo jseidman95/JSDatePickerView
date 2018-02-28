@@ -9,34 +9,34 @@ import UIKit
 
 public protocol JSDatePickerDelegate
 {
-  func jsDatePicker(_ jsDatePicker:JSDatePickerView, didChangeDateFrom collectionView:UICollectionView)
+  func jsDatePicker(_ jsDatePicker:JSDatePickerView,
+                    didChangeDateFrom collectionView:UICollectionView)
 }
 
 public class JSDatePickerView: UIView
 {
   // PRIVATE VARS
   // Bools
-  private var datePickerIsScrolling  = false
-  private var didSetConstraints      = false
-  private var isCalendarExpanded     = false
-  private var widthGreaterThanHeight = true
+  private var userIsScrollingDateCV     = false
+  private var userIsScrollingCalendarCV = false
+  private var didSetConstraints         = false
   
   // CollectionViews
   private var calendarCV  :CalendarCollectionView!
   private var datePickerCV:DatePickerCollectionView!
   
   // NSLayoutConstraints
-  private var dateConstraint = NSLayoutConstraint()
-  private var calConstraint  = NSLayoutConstraint()
+  private var dateHeightConstraint = NSLayoutConstraint()
+  private var calHeightConstraint  = NSLayoutConstraint()
   
-  // Orientation tracker
+  // orientation tracker
   private var deviceOrientation: UIDeviceOrientation = .unknown
   
   // to keep track of changes for closed calendar
   private var changeLog = 0
   
   // PUBLIC GET PRIVATE SET VARS
-  public private(set) var calendarIsScrolling   = false
+  public private(set) var isCalendarExpanded = false
   
   // PUBLIC VARS
   public var datePickerBackgroundColor:UIColor = UIColor.lightGray
@@ -49,11 +49,11 @@ public class JSDatePickerView: UIView
   }
   public var datePickerHeight:CGFloat = 100.0
   {
-    didSet { dateConstraint.constant = datePickerHeight }
+    didSet { dateHeightConstraint.constant = datePickerHeight }
   }
   public var calendarHeight:CGFloat = 300.0
   {
-    didSet { if didSetConstraints { calConstraint.constant = calendarHeight }}
+    didSet { if didSetConstraints { calHeightConstraint.constant = calendarHeight }}
   }
   public var pickerDelegate:JSDatePickerDelegate? = nil
   public var currentDate:Date = Date()
@@ -85,9 +85,7 @@ public class JSDatePickerView: UIView
   override public func layoutSubviews()
   {
     super.layoutSubviews()
-    
-    print("Layout Subviews in View")
-    
+  
     // make the constraints, if needed
     makeConstraints()
 
@@ -100,13 +98,13 @@ public class JSDatePickerView: UIView
       // update the orientation
       deviceOrientation = UIDevice.current.orientation
       
-      // reset calendar insets
-      let layout = self.calendarCV.collectionViewLayout as! UICollectionViewFlowLayout
-      let diff = self.calendarCV.frame.width - ((self.calendarCV.frame.width / 7).rounded() * 7)
+      let diff = self.calendarCV.bounds.width - ((self.calendarCV.bounds.width / 7).rounded() * 7)
+      let layout = calendarCV.collectionViewLayout as! UICollectionViewFlowLayout
       layout.sectionInset = UIEdgeInsets(top: 0.0,
                                          left: diff/2,
                                          bottom: 0.0,
                                          right: diff/2)
+      layout.invalidateLayout()
     }
   }
 }
@@ -133,10 +131,9 @@ extension JSDatePickerView
   
   private func _expandCalendar()
   {
-    
     // set calendar bool and height constraint
     isCalendarExpanded = true
-    self.calConstraint.constant = self.calendarHeight
+    self.calHeightConstraint.constant = self.calendarHeight
     self.calendarCV.setContentOffset(CGPoint(x: self.calendarCV.frame.width * CGFloat(self.calendarCV.monthArray.count/2), y: 0), animated: false)
     
     // set the date picker mode to month and load the correct data
@@ -186,7 +183,7 @@ extension JSDatePickerView
 
     // change the calendar bool and shrink the calendar
     isCalendarExpanded = false
-    self.calConstraint.constant = 0.0
+    self.calHeightConstraint.constant = 0.0
     
     // animate shrinking of calendar
     UIView.animate(withDuration: 0.40,
@@ -259,19 +256,16 @@ extension JSDatePickerView
         datePickerCV.topAnchor.constraint(equalTo: safeGuide.topAnchor).isActive     = true
         datePickerCV.leftAnchor.constraint(equalTo: safeGuide.leftAnchor).isActive   = true
         datePickerCV.rightAnchor.constraint(equalTo: safeGuide.rightAnchor).isActive = true
-
-        datePickerCV.centerXAnchor.constraint(equalTo: safeGuide.centerXAnchor).isActive = true
-        dateConstraint = datePickerCV.heightAnchor.constraint(equalToConstant: self.datePickerHeight)
-        dateConstraint.isActive = true
+        dateHeightConstraint = datePickerCV.heightAnchor.constraint(equalToConstant: self.datePickerHeight)
+        dateHeightConstraint.isActive = true
       
         // add constraints to calendarCV
         calendarCV.topAnchor.constraint(equalTo: datePickerCV.bottomAnchor).isActive      = true
         calendarCV.bottomAnchor.constraint(equalTo: safeGuide.bottomAnchor).isActive      = true
-        calendarCV.leftAnchor.constraint(equalTo: safeGuide.leftAnchor).isActive          = true
+        calendarCV.leftAnchor.constraint(equalTo: safeGuide.leftAnchor).isActive = true
         calendarCV.rightAnchor.constraint(equalTo: safeGuide.rightAnchor).isActive        = true
-        calendarCV.centerXAnchor.constraint(equalTo: datePickerCV.centerXAnchor).isActive = true
-        calConstraint = calendarCV.heightAnchor.constraint(equalToConstant: 0.0)
-        calConstraint.isActive = true
+        calHeightConstraint = calendarCV.heightAnchor.constraint(equalToConstant: 0.0)
+        calHeightConstraint.isActive = true
       }
       else
       {
@@ -279,16 +273,16 @@ extension JSDatePickerView
         datePickerCV.topAnchor.constraint(equalTo: self.topAnchor).isActive     = true
         datePickerCV.leftAnchor.constraint(equalTo: self.leftAnchor).isActive   = true
         datePickerCV.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-        dateConstraint = datePickerCV.heightAnchor.constraint(equalToConstant: self.datePickerHeight)
-        dateConstraint.isActive = true
+        dateHeightConstraint = datePickerCV.heightAnchor.constraint(equalToConstant: self.datePickerHeight)
+        dateHeightConstraint.isActive = true
         
         // add constraints to calendarCV
         calendarCV.topAnchor.constraint(equalTo: datePickerCV.bottomAnchor).isActive = true
         calendarCV.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive      = true
         calendarCV.leftAnchor.constraint(equalTo: self.leftAnchor).isActive          = true
         calendarCV.rightAnchor.constraint(equalTo: self.rightAnchor).isActive        = true
-        calConstraint = calendarCV.heightAnchor.constraint(equalToConstant: 0.0)
-        calConstraint.isActive = true
+        calHeightConstraint = calendarCV.heightAnchor.constraint(equalToConstant: 0.0)
+        calHeightConstraint.isActive = true
       }
     }
   }
@@ -312,7 +306,7 @@ extension JSDatePickerView: DualCollectionViewScrollDelegate
     if collectionView is CalendarCollectionView
     {
       // if the calendar is being scrolled by the user
-      if !datePickerIsScrolling && calendarIsScrolling
+      if !userIsScrollingDateCV && userIsScrollingCalendarCV
       {
         datePickerCV.setContentOffset(calendarCV.contentOffset, animated: false)
       }
@@ -320,7 +314,7 @@ extension JSDatePickerView: DualCollectionViewScrollDelegate
     else if collectionView is DatePickerCollectionView
     {
       // the date picker is being scrolled by the user
-      if !calendarIsScrolling && isCalendarExpanded
+      if !userIsScrollingCalendarCV && isCalendarExpanded
       {
         calendarCV.setContentOffset(datePickerCV.contentOffset, animated: false)
       }
@@ -363,8 +357,8 @@ extension JSDatePickerView: DualCollectionViewScrollDelegate
     }
     
     // reset the scrolling bools
-    calendarIsScrolling   = false
-    datePickerIsScrolling = false
+    userIsScrollingCalendarCV   = false
+    userIsScrollingDateCV = false
     datePickerCV.isUserInteractionEnabled = true
     calendarCV.isUserInteractionEnabled   = true
   }
@@ -374,12 +368,12 @@ extension JSDatePickerView: DualCollectionViewScrollDelegate
   {
     if collectionView is CalendarCollectionView
     {
-      calendarIsScrolling = true
+      userIsScrollingCalendarCV = true
       datePickerCV.isUserInteractionEnabled = false
     }
     else
     {
-      datePickerIsScrolling = true
+      userIsScrollingDateCV = true
       calendarCV.isUserInteractionEnabled = false
     }
   }

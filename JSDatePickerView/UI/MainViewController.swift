@@ -60,4 +60,8 @@ class MainViewController: UIViewController, JSDatePickerDelegate
     
     //js.datePickerHeight = 500.0
   }
+  
+  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    js?.collapseCalendar()
+  }
 }

@@ -57,6 +57,8 @@ public class DatePickerCollectionView: UICollectionView,
     layout.minimumLineSpacing      = 0.0
     layout.scrollDirection         = .horizontal
     self.collectionViewLayout      = layout
+    
+    addGradientMask()
   }
   
   internal func loadData()
@@ -173,5 +175,25 @@ public class DatePickerCollectionView: UICollectionView,
     self.scrollToItem(at: IndexPath(row: dateArray.count/2, section: 0),
                       at: .centeredHorizontally,
                       animated: false)
+  }
+  
+  private func addGradientMask() {
+    let coverView = GradientView(frame: self.bounds)
+    let coverLayer = coverView.layer as! CAGradientLayer
+    coverLayer.colors = [UIColor.white.withAlphaComponent(0).cgColor,
+                         UIColor.white.cgColor,
+                         UIColor.white.withAlphaComponent(0).cgColor]
+    coverLayer.locations = [0.0, 0.5, 1.0]
+    coverLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+    coverLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+    self.mask = coverView
+  }
+}
+
+class GradientView: UIView
+{
+  override class var layerClass: AnyClass
+  {
+    return CAGradientLayer.self
   }
 }

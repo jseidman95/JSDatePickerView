@@ -188,7 +188,7 @@ public class CalendarCollectionView: UICollectionView,
     switch monthArray[indexPath.section][indexPath.row].gray
     {
       case .previousMonth(let grayNum, let isLast):
-        cell?.backgroundColor = grayedCellColor.withAlphaComponent(1-(CGFloat(grayNum) * 0.15))
+        cell?.backgroundColor = grayedCellColor.withAlphaComponent(1-(CGFloat(grayNum) * 0.065 + 0.15))
         if isLast
         {
           let rectShape = CAShapeLayer()
@@ -200,7 +200,7 @@ public class CalendarCollectionView: UICollectionView,
           cell?.layer.mask = rectShape
         }
       case .nextMonth(let grayNum, let isFirst):
-        cell?.backgroundColor = grayedCellColor.withAlphaComponent(CGFloat(grayNum)*0.15 + 0.15)
+        cell?.backgroundColor = grayedCellColor.withAlphaComponent(CGFloat(grayNum)*0.065 + 0.15)
         if isFirst
         {
           let rectShape = CAShapeLayer()
@@ -248,7 +248,7 @@ public class CalendarCollectionView: UICollectionView,
       let spaceToSubtract = flowLayout.sectionInset.left  +
         flowLayout.sectionInset.right +
         (flowLayout.minimumInteritemSpacing * CGFloat(daysPerLine - 1))
-      
+
       // The size of the height and width of the cell
       let size = (self.bounds.width - spaceToSubtract) / CGFloat(daysPerLine)
       
@@ -256,9 +256,9 @@ public class CalendarCollectionView: UICollectionView,
       self.cellWidth = size.rounded()
       
       // make new size
-      cellSize = CGSize(width: size, height: self.frame.height / CGFloat(monthArray[indexPath.section].count / daysPerLine))
+      cellSize = CGSize(width: cellWidth, height: self.frame.height / CGFloat(monthArray[indexPath.section].count / daysPerLine))
     }
-    
+
     return cellSize
   }
   
@@ -292,7 +292,6 @@ public class CalendarCollectionView: UICollectionView,
       }
     }
   }
-  
   // UIScrollViewDelegate
   public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView)
   {
@@ -330,10 +329,4 @@ public class CalendarCollectionView: UICollectionView,
                       animated: false)
   }
   
-  public override func layoutSubviews()
-  {
-    super.layoutSubviews()
-    
-    print("Layout Subviews in Cal")
-  }
 }
