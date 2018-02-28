@@ -180,10 +180,11 @@ public class DatePickerCollectionView: UICollectionView,
   private func addGradientMask() {
     let coverView = GradientView(frame: self.bounds)
     let coverLayer = coverView.layer as! CAGradientLayer
-    coverLayer.colors = [UIColor.white.withAlphaComponent(0).cgColor,
+    coverLayer.colors = [UIColor.white.withAlphaComponent(0.4).cgColor,
                          UIColor.white.cgColor,
-                         UIColor.white.withAlphaComponent(0).cgColor]
-    coverLayer.locations = [0.0, 0.5, 1.0]
+                         UIColor.white.cgColor,
+                         UIColor.white.withAlphaComponent(0.4).cgColor]
+    coverLayer.locations = [0.0, 0.1, 0.9, 1.0]
     coverLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
     coverLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
     self.mask = coverView

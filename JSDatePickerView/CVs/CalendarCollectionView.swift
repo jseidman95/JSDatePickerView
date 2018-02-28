@@ -155,6 +155,7 @@ public class CalendarCollectionView: UICollectionView,
     cell?.selectedCircleColor = selectedCircleColor
     cell?.circleDistanceFromEdge = self.selectedCircleDistanceFromEdge
     cell?.layer.mask = nil
+    cell?.clipsToBounds = false
     
     // set the label
     if monthArray[indexPath.section][indexPath.row].day == nil // if the cell is a day cell and not a date cell
@@ -196,7 +197,8 @@ public class CalendarCollectionView: UICollectionView,
           rectShape.position = (cell?.center)!
           rectShape.path = UIBezierPath(roundedRect: (cell?.bounds)!,
                                         byRoundingCorners: [.topRight,.bottomRight],
-                                        cornerRadii: CGSize(width: 15, height: 15)).cgPath
+                                        cornerRadii: CGSize(width:  cell!.frame.height / 3.5,
+                                                            height: cell!.frame.height / 3.5)).cgPath
           cell?.layer.mask = rectShape
         }
       case .nextMonth(let grayNum, let isFirst):
@@ -208,7 +210,8 @@ public class CalendarCollectionView: UICollectionView,
           rectShape.position = (cell?.center)!
           rectShape.path = UIBezierPath(roundedRect: (cell?.bounds)!,
                                         byRoundingCorners: [.topLeft,.bottomLeft],
-                                        cornerRadii: CGSize(width: 15, height: 15)).cgPath
+                                        cornerRadii: CGSize(width: cell!.frame.height / 3.5,
+                                                            height: cell!.frame.height / 3.5)).cgPath
           cell?.layer.mask = rectShape
         }
       case .none:
@@ -225,6 +228,7 @@ public class CalendarCollectionView: UICollectionView,
       {
         cell?.setSelectedCircle()
         cell?.addCircle(layer: (cell?.selectedCircleLayer)!)
+        cell?.dateNumberLabel.font = cell?.dateNumberLabel.font.withSize((cell?.dateNumberLabel.font.pointSize)! + 5)
         self.selectedCell = cell
       }
     }

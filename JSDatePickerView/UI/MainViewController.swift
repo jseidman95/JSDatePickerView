@@ -29,7 +29,7 @@ class MainViewController: UIViewController, JSDatePickerDelegate
     let myFrame = CGRect(x: 0.0,
                          y: 0.0,
                          width: self.view.frame.width,
-                         height: 150.0)
+                         height: 400.0)
     js = JSDatePickerView(frame: myFrame)
     js?.pickerDelegate = self
     self.view.addSubview(js!)
@@ -57,8 +57,6 @@ class MainViewController: UIViewController, JSDatePickerDelegate
     myView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
     myView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
     myView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
-    
-    //js.datePickerHeight = 500.0
   }
   
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
