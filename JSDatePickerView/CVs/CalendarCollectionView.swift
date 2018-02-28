@@ -21,6 +21,7 @@ public class CalendarCollectionView: UICollectionView,
                                                 green: 192/255.0,
                                                 blue:  192/255.0,
                                                 alpha: 1.0)
+  private var autoScrolling = false
   
   // PUBLIC VARS
   public var cellBackgroundColor:UIColor = UIColor.white   //The background color of the cell
@@ -143,7 +144,7 @@ public class CalendarCollectionView: UICollectionView,
   }
   
   public func collectionView(_ collectionView: UICollectionView,
-                      cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
+                             cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
   {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "calendarCell", for: indexPath) as? CalendarViewCell
     
@@ -237,7 +238,7 @@ public class CalendarCollectionView: UICollectionView,
                              sizeForItemAt indexPath: IndexPath) -> CGSize
   {
     var cellSize = CGSize()
-
+    
     // get flow layout
     let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout
     
@@ -277,12 +278,12 @@ public class CalendarCollectionView: UICollectionView,
       if newDate.getMonth() == currentDate.getMonth()
       {
         self.selectedCell?.deleteCircle(layer: (selectedCell?.selectedCircleLayer)!)
-        
+
         let cell = collectionView.cellForItem(at: indexPath) as? CalendarViewCell
         cell?.setSelectedCircle()
         cell?.addCircle(layer: (cell?.selectedCircleLayer)!)
         self.selectedCell = cell
-        
+
         self.pickerDate = newDate
         
         touchTransferDelegate?.collectionView(collectionView, didSelectItemAt: indexPath)
@@ -296,10 +297,15 @@ public class CalendarCollectionView: UICollectionView,
     // calculated difference from middle
     let diff = Int(self.contentOffset.x / self.frame.width) - monthArray.count / 2
     
-    self.shiftAndScroll(diff:diff)
-    dualScrollDelegate?.collectionViewDidEndScroll(self, withDifferenceOf: diff)
+    if !autoScrolling
+    {
+      currentDate = monthArray[Int(self.contentOffset.x / self.frame.width)][2].date!
+    }
+    autoScrolling = false
     
-    currentDate = monthArray[Int(self.contentOffset.x / self.frame.width)][16].date!
+    self.shiftAndScroll(diff:diff)
+    
+    dualScrollDelegate?.collectionViewDidEndScroll(self, withDifferenceOf: diff)
   }
   
   public func scrollViewDidScroll(_ scrollView: UIScrollView)
@@ -316,8 +322,16 @@ public class CalendarCollectionView: UICollectionView,
   internal func shiftAndScroll(diff:Int)
   {
     shiftDateArray(diff:diff)
+    autoScrolling = true
     self.scrollToItem(at: IndexPath(row: 0, section:  monthArray.count/2),
                       at: .left,
                       animated: false)
+  }
+  
+  public override func layoutSubviews()
+  {
+    super.layoutSubviews()
+    
+    print("Layout Subviews in Cal")
   }
 }

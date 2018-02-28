@@ -86,6 +86,8 @@ public class JSDatePickerView: UIView
   {
     super.layoutSubviews()
     
+    print("Layout Subviews in View")
+    
     // make the constraints, if needed
     makeConstraints()
 
@@ -135,7 +137,6 @@ extension JSDatePickerView
     // set calendar bool and height constraint
     isCalendarExpanded = true
     self.calConstraint.constant = self.calendarHeight
-    
     self.calendarCV.setContentOffset(CGPoint(x: self.calendarCV.frame.width * CGFloat(self.calendarCV.monthArray.count/2), y: 0), animated: false)
     
     // set the date picker mode to month and load the correct data
@@ -166,15 +167,12 @@ extension JSDatePickerView
                    completion: { _ in
                     // reset the change log
                     self.changeLog = 0
-                    //self.reloadAllData()
+                    self.reloadAllData()
                    })
   }
   
   private func _collapseCalendar()
   {
-    // change the calendar bool and shrink the calendar
-    isCalendarExpanded = false
-    self.calConstraint.constant = 0.0
 
     // change the picker mode back to day and load the correct data
     datePickerCV.pickerMode  = .day
@@ -186,6 +184,10 @@ extension JSDatePickerView
       self.datePickerCV.reloadSections(NSIndexSet(index: 0) as IndexSet)
     }, completion: nil)
 
+    // change the calendar bool and shrink the calendar
+    isCalendarExpanded = false
+    self.calConstraint.constant = 0.0
+
     // animate shrinking of calendar
     UIView.animate(withDuration: 0.40,
                    delay: 0.0,
@@ -194,9 +196,8 @@ extension JSDatePickerView
                     self.calendarCV.layoutIfNeeded()
                     self.superview?.layoutIfNeeded()
                    },
-                   completion: { _ in
-                    //self.reloadAllData()
-                   })
+                   completion: nil)
+    
   }
   
   private func startUp()
