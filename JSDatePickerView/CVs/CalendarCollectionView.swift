@@ -286,7 +286,9 @@ public class CalendarCollectionView: UICollectionView,
 
         self.pickerDate = newDate
         
-        touchTransferDelegate?.collectionView(collectionView, didSelectItemAt: indexPath)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05, execute: {
+          self.touchTransferDelegate?.collectionView(collectionView, didSelectItemAt: indexPath)
+        })
       }
     }
   }

@@ -22,7 +22,7 @@ public class JSDatePickerView: UIView
   private var widthGreaterThanHeight = true
   
   // CollectionViews
-  public var calendarCV  :CalendarCollectionView!
+  private var calendarCV  :CalendarCollectionView!
   private var datePickerCV:DatePickerCollectionView!
   
   // NSLayoutConstraints
@@ -187,11 +187,11 @@ extension JSDatePickerView
     // change the calendar bool and shrink the calendar
     isCalendarExpanded = false
     self.calConstraint.constant = 0.0
-
+    
     // animate shrinking of calendar
     UIView.animate(withDuration: 0.40,
                    delay: 0.0,
-                   options: .curveEaseOut,
+                   options: [.curveEaseOut],
                    animations: {
                     self.calendarCV.layoutIfNeeded()
                     self.superview?.layoutIfNeeded()
@@ -256,8 +256,8 @@ extension JSDatePickerView
       {
         let safeGuide = self.safeAreaLayoutGuide
       
-        datePickerCV.topAnchor.constraint(equalTo: safeGuide.topAnchor).isActive = true
-        datePickerCV.leftAnchor.constraint(equalTo: safeGuide.leftAnchor).isActive = true
+        datePickerCV.topAnchor.constraint(equalTo: safeGuide.topAnchor).isActive     = true
+        datePickerCV.leftAnchor.constraint(equalTo: safeGuide.leftAnchor).isActive   = true
         datePickerCV.rightAnchor.constraint(equalTo: safeGuide.rightAnchor).isActive = true
 
         datePickerCV.centerXAnchor.constraint(equalTo: safeGuide.centerXAnchor).isActive = true
@@ -265,19 +265,19 @@ extension JSDatePickerView
         dateConstraint.isActive = true
       
         // add constraints to calendarCV
-        calendarCV.topAnchor.constraint(equalTo: datePickerCV.bottomAnchor).isActive = true
+        calendarCV.topAnchor.constraint(equalTo: datePickerCV.bottomAnchor).isActive      = true
         calendarCV.bottomAnchor.constraint(equalTo: safeGuide.bottomAnchor).isActive      = true
-        calendarCV.leftAnchor.constraint(equalTo: safeGuide.leftAnchor).isActive = true
-        calendarCV.rightAnchor.constraint(equalTo: safeGuide.rightAnchor).isActive = true
-        calendarCV.centerXAnchor.constraint(equalTo: datePickerCV.centerXAnchor).isActive   = true
+        calendarCV.leftAnchor.constraint(equalTo: safeGuide.leftAnchor).isActive          = true
+        calendarCV.rightAnchor.constraint(equalTo: safeGuide.rightAnchor).isActive        = true
+        calendarCV.centerXAnchor.constraint(equalTo: datePickerCV.centerXAnchor).isActive = true
         calConstraint = calendarCV.heightAnchor.constraint(equalToConstant: 0.0)
         calConstraint.isActive = true
       }
       else
       {
         // add constraints to datepickerCV
-        datePickerCV.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        datePickerCV.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
+        datePickerCV.topAnchor.constraint(equalTo: self.topAnchor).isActive     = true
+        datePickerCV.leftAnchor.constraint(equalTo: self.leftAnchor).isActive   = true
         datePickerCV.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         dateConstraint = datePickerCV.heightAnchor.constraint(equalToConstant: self.datePickerHeight)
         dateConstraint.isActive = true
@@ -285,8 +285,8 @@ extension JSDatePickerView
         // add constraints to calendarCV
         calendarCV.topAnchor.constraint(equalTo: datePickerCV.bottomAnchor).isActive = true
         calendarCV.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive      = true
-        calendarCV.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
-        calendarCV.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        calendarCV.leftAnchor.constraint(equalTo: self.leftAnchor).isActive          = true
+        calendarCV.rightAnchor.constraint(equalTo: self.rightAnchor).isActive        = true
         calConstraint = calendarCV.heightAnchor.constraint(equalToConstant: 0.0)
         calConstraint.isActive = true
       }
