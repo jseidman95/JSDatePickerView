@@ -14,31 +14,31 @@ public class CalendarCollectionView: UICollectionView,
                               UICollectionViewDelegateFlowLayout
 {
   // PRIVATE VARS
-  private var grayCounter = 0
+  private var grayCounter = 0 // this variable tracks the amount of gray cells layed out for darkening
   private let daysPerLine:Int = 7 //This variable holds the amount of cells that are displayed per line
-  private var selectedCell:CalendarViewCell? = nil
+  private var selectedCell:CalendarViewCell? = nil // keeps track of the selected cell for radio selection
   private var grayedCellColor:UIColor = UIColor(red:   192/255.0,
                                                 green: 192/255.0,
                                                 blue:  192/255.0,
                                                 alpha: 1.0)
-  private var autoScrolling = false
+  private var autoScrolling = false // autoscrolling means the user is not scrolling
   
   // PUBLIC VARS
   public var cellBackgroundColor:UIColor = UIColor.white   //The background color of the cell
-  public var selectedCircleColor:UIColor = UIColor(red:   255/255.0, //The color of circle when the user selects
-                                                   green: 51/255.0,
-                                                   blue:  51/255.0,
-                                                   alpha: 1.0)
   public var selectedCircleDistanceFromEdge:CGFloat = 10.0  //The circle's distance from the edge of the cell
   public var font:UIFont = UIFont.systemFont(ofSize: 12.0) //The font of the cells
-  public var dualScrollDelegate:DualCollectionViewScrollDelegate? = nil
-  public var touchTransferDelegate:CollectionViewTouchTransferDelegate? = nil
-  public var preloadedCellCount:Int = 50
+  public var selectedColor:UIColor = UIColor(red:   255/255.0, //The color of circle when the user selects
+                                             green: 51/255.0,
+                                             blue:  51/255.0,
+                                             alpha: 1.0)
   
   // INTERNAl VARS
   internal var monthArray:[[CalendarDay]] = []
   internal var currentDate:Date = Date() //The current date of the calendar
   internal var pickerDate:Date  = Date()
+  internal var preloadedCellCount:Int = 50
+  internal var dualScrollDelegate:DualCollectionViewScrollDelegate? = nil
+  internal var touchTransferDelegate:CollectionViewTouchTransferDelegate? = nil
   
   // PUBLIC GET PRIVATE SET VARS
   public private(set) var cellWidth:CGFloat = 0.0 //helps the picker view set frame, dont want the user messing with this
@@ -152,7 +152,7 @@ public class CalendarCollectionView: UICollectionView,
     cell?.deleteCircle(layer: cell!.selectedCircleLayer)
     cell?.backgroundColor = cellBackgroundColor
     cell?.dateNumberLabel.font = font
-    cell?.selectedCircleColor = selectedCircleColor
+    cell?.selectedCircleColor = selectedColor
     cell?.circleDistanceFromEdge = self.selectedCircleDistanceFromEdge
     cell?.layer.mask = nil
     cell?.clipsToBounds = false

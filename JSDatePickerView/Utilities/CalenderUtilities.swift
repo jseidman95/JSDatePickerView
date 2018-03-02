@@ -19,7 +19,11 @@ public protocol CollectionViewTouchTransferDelegate
 {
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
 }
-
+public enum SelectionStyle
+{
+  case circle
+  case fill
+}
 //This enum holds month/day data that is used in the calendar
 public enum MonthEnum: Int, CustomStringConvertible
 {

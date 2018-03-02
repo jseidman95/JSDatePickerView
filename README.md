@@ -19,12 +19,17 @@ This Cocoapod provides a custom date picker with a popout calendar.  The user ca
 
 The calendar font:
 ```swift
-js.calendarCV.calendarFont = UIFont.systemFont(ofSize: 20.0)
+js.calendarCV.font = UIFont.systemFont(ofSize: 20.0)
 ```
 
 The calendar cell background color
 ```swift
-js.cellBackgroundColor = UIColor.blue
+js.calendarCV.cellBackgroundColor = UIColor.blue
+```
+
+The calendar cell background color
+```swift
+js.calendarCV.selectedCircleDistanceFromEdge = 2.0
 ```
 
 ## Installation
