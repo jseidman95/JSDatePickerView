@@ -103,7 +103,7 @@ public class JSDatePickerView: UIView
   }
 }
 
-extension JSDatePickerView
+public extension JSDatePickerView
 {
   /** Public **/
   public func expandCalendar()   { _expandCalendar() }
@@ -111,7 +111,7 @@ extension JSDatePickerView
   
 }
 
-extension JSDatePickerView
+public extension JSDatePickerView
 {
   /** Private **/
   
@@ -290,6 +290,7 @@ extension JSDatePickerView
     self.scrollToMiddle()
   }
 }
+
 extension JSDatePickerView: DualCollectionViewScrollDelegate
 {
   /** DualCollectionViewScrollDelegate **/
