@@ -1,6 +1,0 @@
-framework module EAInfiniteScrollView {
-  umbrella header "EAInfiniteScrollView-umbrella.h"
-
-  export *
-  module * { export * }
-}

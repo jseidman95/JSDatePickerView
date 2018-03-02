@@ -11,7 +11,7 @@
 
 ## Introduction
 
-This Cocoapod provides a custom date picker with a popout calendar.  The user can navigate throught the dates by clicking the left and right arrows or swiping left/right.  The user also has the option of using the pop out calendar to easily choose dates far in the future.  The calendar and view are very customizable and allow the developer to change many features.
+This Cocoapod provides a custom date picker with a popout calendar.  The user can navigate throught the dates by swiping left/right.  The user also has the option of using the pop out calendar to easily choose dates far in the future.  The calendar and view are very customizable and allow the developer to change many features.
 
 ## Code Samples
 
@@ -19,36 +19,13 @@ This Cocoapod provides a custom date picker with a popout calendar.  The user ca
 
 The calendar font:
 ```swift
-js.calendarFont = UIFont.systemFont(ofSize: 20.0)
+js.calendarCV.calendarFont = UIFont.systemFont(ofSize: 20.0)
 ```
-The calendar width
-```swift
-js.calendarWidth = 300.0
-```
+
 The calendar cell background color
 ```swift
 js.cellBackgroundColor = UIColor.blue
 ```
-
-**JSDatePicker can also be controlled programmatically**
-
-Programmatically Expand:
-```swift
-js.expandCalendar()
-```
-Programmatically Collapse:
-```swift
-js.collapseCalendar()
-```
-Programmatically go left:
-```swift
-js.leftButtonAction()
-```
-Programmatically go right
-```swift
-js.rightButtonAction()
-```
-
 
 ## Installation
 
