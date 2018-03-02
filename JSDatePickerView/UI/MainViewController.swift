@@ -30,20 +30,24 @@ class MainViewController: UIViewController, JSDatePickerDelegate
                          y: 0.0,
                          width: self.view.frame.width,
                          height: 400.0)
-    js = JSDatePickerView(frame: myFrame)
+    js = JSDatePickerView(frame: myFrame, datePickerHeight: 100.0, calendarHeight: 250.0)
     js?.pickerDelegate = self
     self.view.addSubview(js!)
     
-    if #available(iOS 11.0, *) {
+    if #available(iOS 11.0, *)
+    {
       let safeArea = self.view.safeAreaLayoutGuide
       js?.translatesAutoresizingMaskIntoConstraints = false
       js?.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
       js?.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
       js?.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
-    } else {
+    }
+    else
+    {
       // Fallback on earlier versions
-      
-      // TODO
+      js?.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+      js?.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
+      js?.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
     }
     
     
@@ -57,9 +61,5 @@ class MainViewController: UIViewController, JSDatePickerDelegate
     myView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
     myView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
     myView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
-  }
-  
-  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-    js?.collapseCalendar()
   }
 }

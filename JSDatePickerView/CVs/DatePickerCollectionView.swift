@@ -13,6 +13,9 @@ public class DatePickerCollectionView: UICollectionView,
                                 UICollectionViewDataSource,
                                 UICollectionViewDelegateFlowLayout
 {
+  // PUBLIC VARS
+  public var font:UIFont = UIFont.systemFont(ofSize: 17.0)
+  
   // INTERNAl VARS
   internal var dateArray:[Date] = []
   internal var dualScrollDelegate:DualCollectionViewScrollDelegate? = nil
@@ -121,6 +124,7 @@ public class DatePickerCollectionView: UICollectionView,
   {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "dateCell", for: indexPath) as? DateCell
     
+    cell?.dateLabel.font = font
     cell?.dateLabel.text = dateArray[indexPath.row].getString(from: pickerMode == .day ?
                                                                                       "EEEE, MMM d, yyyy" :
                                                                                       "MMMM yyyy")
@@ -177,7 +181,8 @@ public class DatePickerCollectionView: UICollectionView,
                       animated: false)
   }
   
-  private func addGradientMask() {
+  private func addGradientMask()
+  {
     let coverView = GradientView(frame: self.bounds)
     let coverLayer = coverView.layer as! CAGradientLayer
     coverLayer.colors = [UIColor.white.withAlphaComponent(0.4).cgColor,

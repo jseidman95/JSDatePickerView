@@ -39,14 +39,7 @@ public class JSDatePickerView: UIView
   public private(set) var isCalendarExpanded = false
   
   // PUBLIC VARS
-  public var datePickerBackgroundColor:UIColor = UIColor.lightGray
-  {
-    didSet { datePickerCV.backgroundColor = datePickerBackgroundColor }
-  }
-  public var calendarBackgroundColor:UIColor   = UIColor.white
-  {
-    didSet { calendarCV.backgroundColor = calendarBackgroundColor }
-  }
+  // Customizable vars
   public var datePickerHeight:CGFloat = 100.0
   {
     didSet { dateHeightConstraint.constant = datePickerHeight }
@@ -55,6 +48,7 @@ public class JSDatePickerView: UIView
   {
     didSet { if didSetConstraints { calHeightConstraint.constant = calendarHeight }}
   }
+  
   public var pickerDelegate:JSDatePickerDelegate? = nil
   public var currentDate:Date = Date()
   
