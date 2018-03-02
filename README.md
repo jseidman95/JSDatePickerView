@@ -1,6 +1,6 @@
 # JSDatePickerView
 
-![Alt Text](https://user-images.githubusercontent.com/24965132/34535809-1ddfa72c-f091-11e7-9401-786896907352.gif)
+![Alt Text](https://user-images.githubusercontent.com/24965132/36904303-5bf0169c-1dfe-11e8-8308-9e62db9a5f36.gif)
 
 
 
