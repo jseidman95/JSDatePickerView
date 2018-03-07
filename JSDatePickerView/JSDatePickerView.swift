@@ -22,8 +22,8 @@ public class JSDatePickerView: UIView
   private var didSetConstraints         = false
   
   // CollectionViews
-  private var calendarCV  :CalendarCollectionView!
-  private var datePickerCV:DatePickerCollectionView!
+  public var calendarCV  :CalendarCollectionView!
+  public var datePickerCV:DatePickerCollectionView!
   
   // NSLayoutConstraints
   private var dateHeightConstraint = NSLayoutConstraint()
@@ -53,7 +53,7 @@ public class JSDatePickerView: UIView
   public var currentDate:Date = Date()
   
   // INITS
-  override init(frame: CGRect)
+  override public init(frame: CGRect)
   {
     super.init(frame: frame)
     
@@ -66,7 +66,7 @@ public class JSDatePickerView: UIView
   }
   
   // custom init
-  convenience init(frame:CGRect, datePickerHeight:CGFloat = 100.0, calendarHeight:CGFloat = 300.0)
+  convenience public init(frame:CGRect, datePickerHeight:CGFloat = 100.0, calendarHeight:CGFloat = 300.0)
   {
     self.init(frame: frame)
     

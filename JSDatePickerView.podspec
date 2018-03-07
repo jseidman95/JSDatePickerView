@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'JSDatePickerView'
-  s.version          = '2.0.0'
+  s.version          = ‘2.0.1’
   s.summary          = 'This is a custom DatePicker UIView'
  
   s.description      = <<-DESC
@@ -14,11 +14,6 @@ Or, the user could press on the UIView and use the custom popout calendar to sel
   s.source           = { :git => 'https://github.com/jseidman95/JSDatePickerView.git', :tag => s.version.to_s }
  
   s.ios.deployment_target = '10.3.1'
-  s.source_files = 'JSDatePickerView/*'
-  s.resource_bundle = {
-    'JSDatePickerView' => [
-        'Sources/JSDatePickerView.bundle/*.png'
-    ]
-  }
+  s.source_files = 'JSDatePickerView/**/*.swift'
  
 end
